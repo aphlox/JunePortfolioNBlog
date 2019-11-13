@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--git체크!!!!-->
+
+    <meta charset="UTF-8">
+    <title> 이현준 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--부트 스트랩 CSS 추가하기-->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <!--색상이나 폰트 적용할 커스텀 CSS 추가하기-->
+    <link rel="stylesheet" href="./css/custom.css">
+
+    <!--멀티컬럼-masonry layout-->
+    <style>
+        #columns {
+            column-width: 600px;
+            column-gap: 15px;
+        }
+
+        #columns figure {
+            display: inline-block;
+            margin: 0 0 15px;
+            padding: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        #columns figure img {
+            width: 100%;
+        }
+
+        #columns figure figcaption {
+            border-top: 1px solid rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            margin-top: 11px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="aboutMe"/>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" >
+    <div class="container">
+        <!--index.html 하라고 했는데 일단 포토폴리오로-->
+        <a href="portfolio.html" class="navbar-brand">이현준</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navCollapse">
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+        <!--id가 navCollapse 토글의 데이터 타겟, 버튼 누르면 여기가 나옴-->
+        <div class="collapse navbar-collapse" id="navCollapse">
+            <!--왼쪽 마진은 오토로-->
+            <ul class="navbar-nav ml-auto" >
+                <li class="nav-item">
+                    <a href="#aboutMe" class="nav-link">About Me</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#project" class="nav-link">Project</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" >Contact</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+</nav>
+<!--위쪽으로 5픽셀정도 여유-->
+<section  class="container mt-5">
+    <div class="text-center">
+        <!--아래쪽으로 3만큼 마진-->
+        <img src="./img/profile.jpg" width="300" height="600" class="img-fluid mb-3 mt-5 rounded-circle">
+        <h2> 이현준</h2>
+        <img src="./img/programmer.png" width="40" height="60" class="img-fluid mr-2">프로그래머
+        <img src="./img/student.png" width="40" height="60" class= "img-fluid mr-1" id="project">학생
+
+    </div>
+</section>
+<section  class="container mt-5">
+    <div class="text-center" id="columns">
+        <figure>
+            <iframe width="925" height="526"
+                    src="https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=3AAD30F69B5C6BC5183A24AE4E1968C52DD2&outKey=V124f820872f0e63b356fd96732a009e527a9e0e6d4105f9761bcd96732a009e527a9"
+                    frameborder="no" scrolling="no" title="NaverVideo"
+                    allow="autoplay; gyroscope; accelerometer; encrypted-media" allowfullscreen></iframe>
+
+            <figcaption> Elemental Dragon Slayer  </figcaption>
+
+        </figure>
+
+        <figure>
+            <iframe width="450" height="306"
+                    src="https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=E50947AF521732D0649B65310D43BAD2A03E&outKey=V1288c8140200fb1ccfa19b4ae236e28da6e264dc852bd81f2de69b4ae236e28da6e2"
+                    frameborder="no" scrolling="no" title="NaverVideo"
+                    allow="autoplay; gyroscope; accelerometer; encrypted-media" allowfullscreen></iframe>
+            <figcaption> Lunch Match Maker </figcaption>
+        </figure>
+
+        <figure>
+            <iframe width="450" height="306"
+                    src="https://serviceapi.nmv.naver.com/flash/convertIframeTag.nhn?vid=48A3A50A1E8C7A9D139F84E49B65315D787C&outKey=V124bce01ffcc78e898ac7571e28004573c522ac82a7d79e7b57d7571e28004573c52"
+                    frameborder="no" scrolling="no" title="NaverVideo"
+                    allow="autoplay; gyroscope; accelerometer; encrypted-media" allowfullscreen></iframe>
+            <figcaption> OpenCV Filter Camera </figcaption>
+        </figure>
+
+
+    </div>
+
+
+</section>
+
+
+<!--<section class="bg-white text-dark mt-5 mb-3 pt-5 pb-4">
+    <div class="text-center">
+        <div class="container text-left mb-5" style="max-width: 480px;">
+            <h2>경력</h2>
+
+        </div>
+
+    </div>
+
+</section>-->
+<!--제이쿼리 자바스크립트 추가하기-->
+<script src="./js/jquery-3.4.1.min.js"></script>
+<!--Popper 자바 스크립트 추가하기-->
+<script src="./js/popper.min.js"></script>
+<!--부트스트랩 자바스크립트 추가하기-->
+<script src="./js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
