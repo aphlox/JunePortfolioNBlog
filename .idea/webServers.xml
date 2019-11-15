@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="30647cd4-39c0-4f85-bb3f-12467a2dadf4" name="JuenProtfolioNBlog" url="http://192.168.204.131">
+      <webServer id="716092ab-0d7e-4b59-b257-e5db5984d9c9" name="JunePortfolioNBlog" url="http://192.168.204.131">
         <fileTransfer host="192.168.204.131" port="22" rootFolder="/usr/local/apache" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />

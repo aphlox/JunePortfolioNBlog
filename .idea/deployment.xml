@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="JuenProtfolioNBlog" autoUploadExternalChanges="true">
+  <component name="PublishConfigData" autoUpload="On explicit save action" serverName="JunePortfolioNBlog" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="JuenProtfolioNBlog">
+      <paths name="JunePortfolioNBlog">
         <serverdata>
           <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/htdocs" local="$PROJECT_DIR$/htdocs" web="/" />
           </mappings>
         </serverdata>
       </paths>
