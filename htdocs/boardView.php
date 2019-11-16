@@ -1,7 +1,3 @@
-<?php
-require('lib/board.php');
-?>
-
 <!doctype html>
 <html>
 <head>
@@ -15,7 +11,6 @@ require('lib/board.php');
 <body>
 <div class="container-fluid">
     <div class="row d-flex d-md-block flex-nowrap wrapper">
-
         <nav class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
             <div class="list-group border-0 card text-center text-md-left">
                 <!--블로그 이름-->
@@ -33,7 +28,7 @@ require('lib/board.php');
 
                 <a href="./portfolio.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/portfolio.png"><span
-                        class="d-none d-md-inline ml-1">Portfolio</span>
+                            class="d-none d-md-inline ml-1">Portfolio</span>
                 </a>
 
                 <!--            <a href="#usermenu" class="list-group-item d-inline-block collapsed" data-toggle="collapse"
@@ -62,9 +57,9 @@ require('lib/board.php');
                     <img style="width: 25px;" src="img/unity.png"><span class="d-none d-md-inline ml-1">Unity</span>
                 </a>
 
-                <!--            <a href="qna.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                              <img style="width: 25px;" src="img/message.svg"><span class="d-none d-md-inline ml-1">Q & A</span>
-                            </a>-->
+                <!--                <a href="qna.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                                    <img style="width: 25px;" src="img/message.svg"><span class="d-none d-md-inline ml-1">Q & A</span>
+                                </a>-->
                 <a href="#search" class="list-group-item d-inline-block collapsed" data-toggle="collapse"
                    data-parent="#sidebar" aria-expanded="false">
                     <!--span 에 안 넣으면 창 크기 줄였을때 글씨가 안 사라지고 이상하게 남아있음-->
@@ -77,51 +72,40 @@ require('lib/board.php');
                 </div>
             </div>
         </nav>
-
-
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
             <div class="page-header mt-3">
-                <h2>자유게시판</h2>
+                <h2>글 보기</h2>
             </div>
-            <p class="lead">다른 회원들과 자유롭게 소통하세요.</p>
+            <p class="lead">게시글을 확인합니다.</p>
             <hr>
-            <table class="table table-striped" style="max-width: 1080px;">
-                <thead>
-                <tr>
-                    <th scope="col" class="mobile" style="width:55px; text-align:center;">번호</th>
-                    <th scope="col" class="mobile" style="text-align:center;">제목</th>
-<!--
-                    <th scope="col" class="mobile" style="width:120px; text-align:center;">날짜</th>
--->
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                print_list();
-                ?>
-                </tbody>
-            </table>
-            <div style="max-width: 1080px;">
-                <a href="boardWrite.html" class="btn btn-primary float-right">글쓰기</a>
-            </div>
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <span class="page-link">&laquo;</span>
-                </li>
-                <li class="page-item"><a class="page-link mobile" href="#">1</a></li>
-                <li class="page-item active"><span class="page-link mobile">2</span></li>
-                <li class="page-item"><a class="page-link mobile" href="#">3</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">4</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">5</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">6</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">7</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">8</a></li>
-                <li class="page-item"><a class="page-link mobile" href="#">9</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">&raquo;</a>
-                </li>
-            </ul>
-            <footer class="text-center" style="max-width: 1080px;">
+            <form class="pt-3 md-3" style="max-width: 920px">
+                <div class="form-group">
+                    <label>제목</label>
+                    <p class="boardTitle"><?php echo $_GET['id']; ?></p>
+                </div>
+                <div class="form-group">
+                    <label>내용</label>
+                    <p class="boardContent"><?php
+                            // 파일 열기
+                            $fp = fopen("./data/".$_GET['id'] , "r") or die("파일을 열 수 없습니다！");
+
+                            // 파일 내용 출력
+                            while( !feof($fp) ) {
+                            echo fgets($fp);
+                            }
+
+                            // 파일 닫기
+                            fclose($fp);
+                            ?>
+
+
+                    </p>
+                </div>
+                <a href="boardEdit.html" class="btn btn-primary">글 수정</a>
+                <a href="#" class="btn btn-primary">글 삭제</a>
+                <a href="board.html" class="btn btn-primary">글 목록</a>
+            </form>
+            <footer class="text-center" style="max-width: 920px;">
                 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
             </footer>
         </main>
