@@ -1,6 +1,3 @@
-<?php
-require('lib/nav.php');
-?>
 <!doctype html>
 <html>
   <head>
@@ -14,27 +11,42 @@ require('lib/nav.php');
   <body>
     <div class="container-fluid">
       <div class="row d-flex d-md-block flex-nowrap wrapper">
-        <?php
-        nav();
-        ?>
+
+          <?php
+          nav();
+          ?>
+
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
           <div class="page-header mt-3">
-              <h2>로그인</h2>
+              <h2>글 수정</h2>
           </div>
-          <p class="lead">아이디와 비밀번호를 입력해 로그인합니다.</p>
+          <p class="lead">게시글을 수정합니다.</p>
           <hr>
-          <form class="pt-3 md-3" style="max-width: 720px">
+          <form class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
-              <label>아이디</label>
-              <input type="text" class="form-control" placeholder="아이디를 입력하세요.">
+              <label>제목</label>
+              <input type="text" class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
+
+
             </div>
             <div class="form-group">
-              <label>비밀번호</label>
-              <input type="password" class="form-control" placeholder="비밀번호를 입력하세요.">
+              <label>내용</label>
+              <textarea class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php
+                  // 파일 열기
+                  $fp = fopen("./data/".$_GET['id'] , "r") or die("파일을 열 수 없습니다！");
+
+                  // 파일 내용 출력
+                  while( !feof($fp) ) {
+                      echo fgets($fp);
+                  }
+
+                  // 파일 닫기
+                  fclose($fp);
+                  ?></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">로그인</button>
+            <button type="submit" class="btn btn-primary">글 수정</button>
           </form>
-          <footer class="text-center" style="max-width: 720px;">
+          <footer class="text-center" style="max-width: 920px;">
 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
           </footer>
         </main>

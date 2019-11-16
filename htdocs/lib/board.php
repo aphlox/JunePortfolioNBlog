@@ -5,7 +5,6 @@ function print_list(){
     $list = scandir('./data');
     $list_result = array_diff($list, array('.', '..'));
     $list_result = array_values($list_result);
-    var_dump($list_result);
     for ($count = count($list_result) - 1; $count >= 0; $count--) {
 
         echo '
