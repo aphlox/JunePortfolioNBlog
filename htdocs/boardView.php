@@ -1,3 +1,6 @@
+<?php
+require('lib/nav.php');
+?>
 <!doctype html>
 <html>
 <head>
@@ -44,7 +47,7 @@
                     </p>
                 </div>
                 <a href="boardEdit.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary">글 수정</a>
-                <a href="#" class="btn btn-primary">글 삭제</a>
+                <a href="boardDelete.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary">글 삭제</a>
                 <a href="board.html" class="btn btn-primary">글 목록</a>
             </form>
             <footer class="text-center" style="max-width: 920px;">

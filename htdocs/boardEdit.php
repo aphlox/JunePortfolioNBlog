@@ -1,3 +1,6 @@
+<?php
+require('lib/nav.php');
+?>
 <!doctype html>
 <html>
   <head>
@@ -22,16 +25,17 @@
           </div>
           <p class="lead">게시글을 수정합니다.</p>
           <hr>
-          <form class="pt-3 md-3" style="max-width: 920px">
+          <form method="post" action="boardUpdate.php" class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
+                <input type="hidden" name="old_title" value="<?=$_GET['id']?>">
               <label>제목</label>
-              <input type="text" class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
+              <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
 
 
             </div>
             <div class="form-group">
               <label>내용</label>
-              <textarea class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php
+              <textarea name = "content" class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php
                   // 파일 열기
                   $fp = fopen("./data/".$_GET['id'] , "r") or die("파일을 열 수 없습니다！");
 
