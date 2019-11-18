@@ -1,6 +1,31 @@
 <?php
 require('lib/nav.php');
 
+$url = "http://192.168.204.137/board.html";
+
+if (isset($_POST['submit'])) {
+            $id = $_POST["id"];
+
+            $form_data = array(
+                'method' => 'DELETE',
+                'id' => $id
+            );
+
+
+            $str = http_build_query($form_data);
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.137/boardManagerCurl.php");
+            curl_setopt($ch, CURLOPT_POST,1);
+//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+    $output = curl_exec($ch);
+            curl_close($ch);
+}
+
 ?>
 <!doctype html>
 <html>
@@ -17,6 +42,7 @@ require('lib/nav.php');
     <div class="row d-flex d-md-block flex-nowrap wrapper">
         <?php
         nav();
+
         ?>
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
             <div class="page-header mt-3">
@@ -24,7 +50,16 @@ require('lib/nav.php');
             </div>
             <p class="lead">게시글을 확인합니다.</p>
             <hr>
-            <form class="pt-3 md-3" style="max-width: 920px">
+            <div>
+                <?php
+
+                if (isset($output)) {
+                    echo("<script>location.href=  'http://192.168.204.137/board.html' </script>");
+                }
+                ?>
+            </div>
+            <form method="post" class="pt-3 md-3" style="max-width: 920px">
+                <input type="hidden" name="id" value= "<?php echo $_GET['id']; ?>">
                 <div class="form-group">
                     <label>제목</label>
                     <p class="boardTitle"><?php echo $_GET['id']; ?></p>
@@ -32,25 +67,27 @@ require('lib/nav.php');
                 <div class="form-group">
                     <label>내용</label>
                     <p class="boardContent"><?php
-                            // 파일 열기
-                            $fp = fopen("./data/".$_GET['id'] , "r") or die("파일을 열 수 없습니다！");
+                        // 파일 열기
+                        $fp = fopen("./data/" . $_GET['id'], "r") or die("파일을 열 수 없습니다！");
 
-                            // 파일 내용 출력
-                            while( !feof($fp) ) {
+                        // 파일 내용 출력
+                        while (!feof($fp)) {
                             echo fgets($fp);
-                            }
+                        }
 
-                            // 파일 닫기
-                            fclose($fp);
-                            ?>
+                        // 파일 닫기
+                        fclose($fp);
+                        ?>
                     </p>
                 </div>
 
                 <a href="boardEdit.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary">글 수정</a>
-<!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */?>&method=delete" class="btn btn-primary">글 삭제</a>-->
-                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */?>&method=delete" class="btn btn-primary">글 삭제</a>
+                <!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */ ?>&method=delete" class="btn btn-primary">글 삭제</a>-->
+
+                <button type="submit" name="submit" class="btn btn-primary">글 삭제</button>
 
                 <a href="board.html" class="btn btn-primary">글 목록</a>
+
             </form>
             <footer class="text-center" style="max-width: 920px;">
                 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->

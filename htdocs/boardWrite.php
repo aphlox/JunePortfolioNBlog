@@ -1,26 +1,28 @@
 <?php
 require('lib/nav.php');
 
-if (isset($_POST['submit'])){
-           $title = $_POST["title"];
-           $content = $_POST['content'];
+if (isset($_POST['submit'])) {
+            $title = $_POST["title"];
+            $content = $_POST['content'];
 
-           $form_data = array(
-                             'title' => $title,
-                             'content' => $content
+            $form_data = array(
+              'method' => 'POST',
+                'title' => $title,
+                'content' => $content
 
-           );
+            );
 
-           $str = http_build_query($form_data);
+            $str = http_build_query($form_data);
 
-           $ch = curl_init();
-           curl_setopt($ch, CURLOPT_URL,"http://192.168.204.137/boardManagerCurl.php");
-//           curl_setopt($ch, CURLOPT_POST,1);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-           curl_setopt($ch,CURLOPT_POSTFIELDS, $str);
-           curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-           $output = curl_exec($ch);
-           curl_close($ch);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.137/boardManagerCurl.php");
+            curl_setopt($ch, CURLOPT_POST,1);
+//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $output = curl_exec($ch);
+            curl_close($ch);
 }
 ?>
 
@@ -49,8 +51,9 @@ if (isset($_POST['submit'])){
             <hr>
             <div>
                 <?php
-                if(isset($output)){
-                    echo $output;
+                if (isset($output)) {
+                    echo("<script>location.href=  'http://192.168.204.137/board.html' </script>");
+
                 }
                 ?>
             </div>

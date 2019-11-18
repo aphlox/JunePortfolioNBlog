@@ -1,5 +1,31 @@
 <?php
 require('lib/nav.php');
+if (isset($_POST['submit'])) {
+
+    $oldTitle = $_POST["oldTitle"];
+    $title = $_POST["title"];
+    $content = $_POST['content'];
+    $form_data = array(
+        'method' => 'PUT',
+        'oldTitle' => $oldTitle,
+        'title' => $title,
+        'content' => $content
+    );
+
+
+
+    $str = http_build_query($form_data);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.137/boardManagerCurl.php");
+    curl_setopt($ch, CURLOPT_POST,1);
+
+//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $output = curl_exec($ch);
+    curl_close($ch);
+}
+
 ?>
 <!doctype html>
 <html>
@@ -26,12 +52,22 @@ require('lib/nav.php');
               <h2>글 수정</h2>
           </div>
           <p class="lead">게시글을 수정합니다.</p>
+
+            <div>
+                <?php
+
+                if (isset($output)) {
+                    echo("<script>location.href=  'http://192.168.204.137/board.html' </script>");
+
+                }
+                ?>
+            </div>
           <hr>
             <!--put 메소드로 처리하라고 post로 보내주기-->
-          <form method="post" action="boardManager.php" class="pt-3 md-3" style="max-width: 920px">
+          <form method="post"  class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
                 <input type="hidden" name="method" value="put">
-                <input type="hidden" name="old_title" value="<?=$_GET['id']?>">
+                <input type="hidden" name="oldTitle" value="<?php echo $_GET['id']; ?>">
               <label>제목</label>
               <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
             </div>
@@ -50,7 +86,7 @@ require('lib/nav.php');
                   fclose($fp);
                   ?></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">글 수정</button>
+            <button type="submit" name="submit" class="btn btn-primary">글 수정</button>
           </form>
           <footer class="text-center" style="max-width: 920px;">
 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
