@@ -1,10 +1,11 @@
 <?php
 require('lib/nav.php');
+
 ?>
 <!doctype html>
 <html>
 <head>
-    <title>커뮤니티 웹 사이트</title>
+    <title>June's Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
@@ -46,7 +47,9 @@ require('lib/nav.php');
                 </div>
 
                 <a href="boardEdit.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary">글 수정</a>
-                <a href="boardManager.php?id=<?php echo $_GET['id']; ?>&method=delete" class="btn btn-primary">글 삭제</a>
+<!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */?>&method=delete" class="btn btn-primary">글 삭제</a>-->
+                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */?>&method=delete" class="btn btn-primary">글 삭제</a>
+
                 <a href="board.html" class="btn btn-primary">글 목록</a>
             </form>
             <footer class="text-center" style="max-width: 920px;">
