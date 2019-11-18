@@ -25,7 +25,7 @@ require('lib/nav.php');
           </div>
           <p class="lead">게시글을 수정합니다.</p>
           <hr>
-          <form method="post" action="boardUpdate.php" class="pt-3 md-3" style="max-width: 920px">
+          <form method="post" action="boardManager.php" class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
                 <input type="hidden" name="method" value="put">
                 <input type="hidden" name="old_title" value="<?=$_GET['id']?>">
