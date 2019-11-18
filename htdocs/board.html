@@ -40,7 +40,9 @@ require('lib/nav.php');
                 <tbody>
 
                 <?php
-                print_list($_GET['page']);
+
+                print_list(get_this_page());
+
                 ?>
                 </tbody>
             </table>
@@ -49,14 +51,20 @@ require('lib/nav.php');
             </div>
             <ul class="pagination">
                 <?php
-                //현재 페이지 값을 통해 현재의 구역값(ex 1~10, 31~40)을 얻음
-                //-1을 한것은 예를 들어 40페이지면 다음섹션으로 인식돼서
-                $nowSection = floor((int)($_GET['page']-1)/10);
-                echo $nowSection;
+                    //현재 페이지 값을 통해 현재의 구역값(ex 1~10, 31~40)을 얻음
+                    //-1을 한것은 예를 들어 40페이지면 다음섹션으로 인식돼서
+                    $nowSection = floor((int)(get_this_page()-1)/10);
+                    $list = scandir('./data');
+                    $listResult = array_diff($list, array('.', '..'));
+                    $listResult = array_values($listResult);
+                    $lastSection = floor(count($listResult)/100);
+                    echo $nowSection;
+                    echo $lastSection;
 
-                if($nowSection ==0){
-                         echo'
-                <li class="page-item disabled">
+
+                    if($nowSection ==0){
+                             echo'
+                    <li class="page-item disabled">
                 <a class="page-link" href="board.html?page='.((($nowSection-1)*10)+1).'">&laquo;</a>
                 </li>
                 ';
@@ -69,8 +77,19 @@ require('lib/nav.php');
                 ';
                 }
 
+                $list = scandir('./data');
+                $listResult = array_diff($list, array('.', '..'));
+                $listResult = array_values($listResult);
+                $lastPage = floor(count($listResult) / 10) + 1;
+
                 for ( $count = $nowSection*10 +1 ; $count <= $nowSection*10 +10; $count++){
-                if(strcmp($_GET['page'], $count) == 0){
+                //섹션에 있는 페이지 숫자가 마지막페이지보다 많으면 출력 멈추기
+                if($count > $lastPage){
+                break;
+                }
+                else{
+
+                if(strcmp(get_this_page(), $count) == 0){
                 echo '
                 <li class="page-item active "><a href="board.html?page='.$count.'"
                                                  class="page-link mobile">'.$count.'</a></li>
@@ -87,11 +106,24 @@ require('lib/nav.php');
 
                 }
 
+                }
+
+
+                if($nowSection ==$lastSection){
                 echo'
-                <li class="page-item">
+                <li class="page-item disabled">
                     <a class="page-link" href="board.html?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
                 </li>
                 ';
+                }
+                else{
+                echo'
+                <li class="page-item ">
+                    <a class="page-link" href="board.html?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
+                </li>
+                ';
+                }
+
                 ?>
             </ul>
             <footer class="text-center" style="max-width: 1080px;">
