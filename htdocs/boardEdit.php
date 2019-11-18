@@ -9,13 +9,15 @@ require('lib/nav.php');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/sidebar.css">
+      <!--사이드바 css 적용-->
+      <link rel="stylesheet" href="css/sidebar.css">
   </head>
   <body>
     <div class="container-fluid">
       <div class="row d-flex d-md-block flex-nowrap wrapper">
 
           <?php
+          //네비게이션
           nav();
           ?>
 
@@ -25,6 +27,7 @@ require('lib/nav.php');
           </div>
           <p class="lead">게시글을 수정합니다.</p>
           <hr>
+            <!--put 메소드로 처리하라고 post로 보내주기-->
           <form method="post" action="boardManager.php" class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
                 <input type="hidden" name="method" value="put">
