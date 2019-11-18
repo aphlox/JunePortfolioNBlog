@@ -27,11 +27,10 @@ require('lib/nav.php');
           <hr>
           <form method="post" action="boardUpdate.php" class="pt-3 md-3" style="max-width: 920px">
             <div class="form-group">
+                <input type="hidden" name="method" value="put">
                 <input type="hidden" name="old_title" value="<?=$_GET['id']?>">
               <label>제목</label>
               <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
-
-
             </div>
             <div class="form-group">
               <label>내용</label>
