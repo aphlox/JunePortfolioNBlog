@@ -4,7 +4,7 @@ function print_list($page){
     $list = scandir('./data');
     $list_result = array_diff($list, array('.', '..'));
     $list_result = array_values($list_result);
-    for ($count = count($list_result) - 1; $count >= 0; $count--) {
+    for ($count = $page; $count >= 0; $count--) {
 
         echo '
                 <tr>
