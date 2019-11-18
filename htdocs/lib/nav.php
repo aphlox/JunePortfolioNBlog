@@ -1,7 +1,6 @@
 <?php
 function nav()
 {
-
     echo ' <nav class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
             <div class="list-group border-0 card text-center text-md-left">
                 <!--블로그 이름-->
