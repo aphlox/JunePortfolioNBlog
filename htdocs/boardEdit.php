@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 
     $str = http_build_query($form_data);
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.137/boardManagerCurl.php");
+    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
     curl_setopt($ch, CURLOPT_POST,1);
 
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
                 <?php
 
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.137/board.html' </script>");
+                    echo("<script>location.href=  'http://192.168.204.138/board.html' </script>");
 
                 }
                 ?>

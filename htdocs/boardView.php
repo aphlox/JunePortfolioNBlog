@@ -1,7 +1,7 @@
 <?php
 require('lib/nav.php');
 
-$url = "http://192.168.204.137/board.html";
+$url = "http://192.168.204.138/board.html";
 
 if (isset($_POST['submit'])) {
             $id = $_POST["id"];
@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
 
             $str = http_build_query($form_data);
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.137/boardManagerCurl.php");
+            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
             curl_setopt($ch, CURLOPT_POST,1);
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
                 <?php
 
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.137/board.html' </script>");
+                    echo("<script>location.href=  'http://192.168.204.138/board.html' </script>");
                 }
                 ?>
             </div>
