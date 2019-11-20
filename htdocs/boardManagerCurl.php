@@ -34,17 +34,12 @@ if (strcmp($_SERVER['REQUEST_METHOD'], "POST") == 0) {
 
 }
 
-
-
-
-
 if(isset($_POST['title'])){
     $title =$_POST['title'];
     $content = $_POST['content'];
     echo $title;
 
 }
-
 
 print_r($_SERVER['REQUEST_METHOD']);
 echo "<br>";

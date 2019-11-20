@@ -79,7 +79,6 @@ $num2=(($page-1)*10)+1;
                 </tbody>
             </table>
             <div style="max-width: 1080px;">
-                <button onclick="location.href='boardwrite.php?starttime=<?php echo time();?>'">게시글 작성</button>
 
                 <a href="boardWrite.php?starttime=<?php echo time();?>" class="btn btn-primary float-right">글쓰기</a>
             </div>
