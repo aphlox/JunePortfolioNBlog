@@ -27,6 +27,15 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<?php
+$boardnum=$_GET['x'];
+
+$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+mysqli_query ($conn, 'SET NAMES utf8');
+$sql = "select *from board where boardnum='$boardnum'";
+$res = $conn->query($sql);
+$row=mysqli_fetch_array($res);
+?>
 <!doctype html>
 <html>
   <head>
@@ -69,22 +78,12 @@ if (isset($_POST['submit'])) {
                 <input type="hidden" name="method" value="put">
                 <input type="hidden" name="oldTitle" value="<?php echo $_GET['id']; ?>">
               <label>제목</label>
-              <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요." value="<?php echo $_GET['id']; ?>">
+              <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요."
+                     value="<?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['boardtitle'])); echo $title; ?>">
             </div>
             <div class="form-group">
               <label>내용</label>
-              <textarea name = "content" class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php
-                  // 파일 열기
-                  $fp = fopen("./data/".$_GET['id'] , "r") or die("파일을 열 수 없습니다！");
-
-                  // 파일 내용 출력
-                  while( !feof($fp) ) {
-                      echo fgets($fp);
-                  }
-
-                  // 파일 닫기
-                  fclose($fp);
-                  ?></textarea>
+              <textarea name = "content" class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php echo str_replace("＆","&",$row['boardcontent']); ?></textarea>
             </div>
             <button type="submit" name="submit" class="btn btn-primary">글 수정</button>
           </form>

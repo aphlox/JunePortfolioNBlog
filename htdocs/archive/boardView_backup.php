@@ -27,6 +27,27 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<?php
+header("Content-Type: text/html; charset=UTF-8");
+$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+mysqli_query ($conn, 'SET NAMES utf8');
+$boardnum=$_GET['x'];
+$cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
+$cookie_value = "1"; //쿠기 값으로 넣어준다.
+setcookie($cookie_name, $cookie_value, time() + (86400), "/"); // 1일 동안 쿠키를 유지하도록 해준다.
+if(!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
+    $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
+    $res2 = $conn->query($sql2);
+}
+$sql = "select *from board where boardnum='$boardnum'";
+$res = $conn->query($sql);
+$row=mysqli_fetch_array($res);
+if($res->num_rows!=1) {
+    echo "<script>alert('존재하지 않는 게시물 경로입니다.'); /*location.href='board.php'*/;</script>";
+    exit();
+}
+?>
+
 <!doctype html>
 <html>
 <head>
@@ -52,7 +73,6 @@ if (isset($_POST['submit'])) {
             <hr>
             <div>
                 <?php
-
                 if (isset($output)) {
                     echo("<script>location.href=  'http://192.168.204.138/board.php' </script>");
                 }

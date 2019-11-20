@@ -70,7 +70,14 @@ if (isset($_POST['submit'])) {
                     <textarea name="content" class="form-control" placeholder="내용을 입력하세요."
                               style="height: 320px;"></textarea>
                 </div>
-                <button type="submit" name="submit" class="btn btn-primary">글 쓰기</button>
+<!--                <form action="upload.php"  method="post" enctype="multipart/form-data" target="test">
+                    <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
+                    <input type="hidden" name="time" value="<?php /*echo $_GET['starttime']; */?>">
+                </form>
+                <iframe name="test"></iframe>-->
+                <button type="submit" style="float: right" name="submit" class="btn btn-primary">글 쓰기</button>
+<!--                <button type="submit" style="float: right" name="submit" class="btn btn-primary">파일 업로드</button>-->
+
             </form>
             <footer class="text-center" style="max-width: 920px;">
                 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->

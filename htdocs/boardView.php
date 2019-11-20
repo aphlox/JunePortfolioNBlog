@@ -27,6 +27,26 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<?php
+header("Content-Type: text/html; charset=UTF-8");
+$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+mysqli_query ($conn, 'SET NAMES utf8');
+$boardnum=$_GET['x'];
+$cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
+$cookie_value = "1"; //쿠기 값으로 넣어준다.
+setcookie($cookie_name, $cookie_value, time() + (86400), "/"); // 1일 동안 쿠키를 유지하도록 해준다.
+if(!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
+    $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
+    $res2 = $conn->query($sql2);
+}
+$sql = "select *from board where boardnum='$boardnum'";
+$res = $conn->query($sql);
+$row=mysqli_fetch_array($res);
+if($res->num_rows!=1) {
+    echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";
+    exit();
+}
+?>
 <!doctype html>
 <html>
 <head>
@@ -62,26 +82,15 @@ if (isset($_POST['submit'])) {
                 <input type="hidden" name="id" value= "<?php echo $_GET['id']; ?>">
                 <div class="form-group">
                     <label>제목</label>
-                    <p class="boardTitle"><?php echo $_GET['id']; ?></p>
+                    <p class="boardTitle"> <?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['boardtitle'])); echo $title; ?></p>
                 </div>
                 <div class="form-group">
                     <label>내용</label>
-                    <p class="boardContent"><?php
-                        // 파일 열기
-                        $fp = fopen("./data/" . $_GET['id'], "r") or die("파일을 열 수 없습니다！");
-
-                        // 파일 내용 출력
-                        while (!feof($fp)) {
-                            echo fgets($fp);
-                        }
-
-                        // 파일 닫기
-                        fclose($fp);
-                        ?>
+                    <p class="boardContent"><?php  echo str_replace("＆","&",$row['boardcontent']); ?>
                     </p>
                 </div>
 
-                <a href="boardEdit.php?id=<?php echo $_GET['id']; ?>" class="btn btn-primary">글 수정</a>
+                <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary">글 수정</a>
                 <!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */ ?>&method=delete" class="btn btn-primary">글 삭제</a>-->
 
                 <button type="submit" name="submit" class="btn btn-primary">글 삭제</button>

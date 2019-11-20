@@ -72,14 +72,16 @@ $num2=(($page-1)*10)+1;
                 $title=str_replace(">","&gt",str_replace("<","&lt",$row['boardtitle']));
                 $title2=str_replace(">","&gt",str_replace("<","&lt",$row['boardtitle']));
                 ?>
-                <tr style = "cursor:pointer;" onClick = "location.href='/boardread.php?x=<?php echo $num;?>'"><th><?php echo $num2;?></th><th><?php echo $title;?></th><th><?php echo substr($row['date'],0,11);?></th><th><?php echo $row['hit'];?></th></tr>
+                <tr style = "cursor:pointer;" onClick = "location.href='/boardView.php?x=<?php echo $num;?>'"><th><?php echo $num2;?></th><th><?php echo $title;?></th><th><?php echo substr($row['date'],0,11);?></th><th><?php echo $row['hit'];?></th></tr>
                 <?php $num2++;}?>
 
 
                 </tbody>
             </table>
             <div style="max-width: 1080px;">
-                <a href="boardWrite.php" class="btn btn-primary float-right">글쓰기</a>
+                <button onclick="location.href='boardwrite.php?starttime=<?php echo time();?>'">게시글 작성</button>
+
+                <a href="boardWrite.php?starttime=<?php echo time();?>" class="btn btn-primary float-right">글쓰기</a>
             </div>
             <ul class="pagination">
                 <?php

@@ -15,7 +15,6 @@ session_start(); ?>
 <div id="demo"></div>
 <form action="upload.php" method="post" enctype="multipart/form-data" target="test">
 <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
-<input type="hidden" name="nickname" value="<?php echo $_SESSION['nickname']; ?>">
 <input type="hidden" name="time" value="<?php echo $_GET['starttime']; ?>">
 </form>
 <iframe name="test"></iframe>
