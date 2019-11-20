@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
             <div>
                 <?php
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.138/board.html' </script>");
+                    echo("<script>location.href=  'http://192.168.204.138/board.php' </script>");
 
                 }
                 ?>

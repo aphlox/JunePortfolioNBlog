@@ -1,6 +1,7 @@
 <?php
 
-if(extension_loaded("curl")){
+phpinfo();
+/*if(extension_loaded("mbstring")){
 
     echo "cURL extension is loaded";
 
@@ -8,7 +9,7 @@ if(extension_loaded("curl")){
 
     echo 'cURL extension failed';
 
-}
+}*/
 
 ?>
 

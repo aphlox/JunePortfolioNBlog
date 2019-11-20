@@ -6,7 +6,7 @@ if (strcmp($_SERVER['REQUEST_METHOD'], "POST") == 0) {
 
     if (strcmp($_POST['method'], "POST") == 0) {
         file_put_contents('data/' . $_POST['title'], $_POST['content']);
-        header('Location: '.$ip.'/board.html');
+        header('Location: '.$ip.'/board.php');
 
         echo $_POST['title'];
         echo $_POST['content'];
@@ -16,8 +16,8 @@ if (strcmp($_SERVER['REQUEST_METHOD'], "POST") == 0) {
     elseif (strcmp($_POST['method'], "PUT") == 0) {
         rename('data/' . $_POST['oldTitle'], 'data/' . $_POST['title']);
         file_put_contents('data/' . $_POST['title'], $_POST['content']);
-//        header('Location: '.$ip.'/board.html');
-        echo("<script>location.href= $ip.'/board.html';</script>");
+//        header('Location: '.$ip.'/board.php');
+        echo("<script>location.href= $ip.boboard.phpscript>");
 
 
 
@@ -25,8 +25,8 @@ if (strcmp($_SERVER['REQUEST_METHOD'], "POST") == 0) {
     //delete
     elseif (strcmp($_POST['method'], "DELETE") == 0){
         unlink('data/'.$_POST['id']);
-//        header( 'Location: '.$ip.'/board.html' );
-        echo("<script>location.href= $ip.'/board.html';</script>");
+//        header( 'Location: '.$ip.'/boarboard.php
+        echo("<script>location.href= $ip.board.board.phppt>");
 
     }
 

@@ -31,19 +31,19 @@ function nav()
                               <a href="userEdit.html" class="list-group-item" data-parent="#sidebar">회원정보수정</a>
                               <a href="userLogout.html" class="list-group-item" data-parent="#sidebar">로그아웃</a>
                             </div>-->
-                <a href="board.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/android.png"><span class="d-none d-md-inline ml-1">Android</span>
                 </a>
-                <a href="board.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/java.png"><span class="d-none d-md-inline ml-1">Java</span>
                 </a>
-                <a href="board.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/php.png"><span class="d-none d-md-inline ml-1">Php</span>
                 </a>
-                <a href="board.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/python.png"><span class="d-none d-md-inline ml-1">Python</span>
                 </a>
-                <a href="board.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/unity.png"><span class="d-none d-md-inline ml-1">Unity</span>
                 </a>
 

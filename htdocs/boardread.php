@@ -13,7 +13,7 @@ session_start(); ?>
 
 <?php 
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("localhost", "root", "a123456&", "web");
+$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $boardnum=$_GET['x'];
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
@@ -27,17 +27,17 @@ $sql = "select *from board where boardnum='$boardnum'";
 $res = $conn->query($sql);
 $row=mysqli_fetch_array($res);
 if($res->num_rows!=1) {
-echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";
+echo "<script>alert('존재하지 않는 게시물 경로입니다.'); /*location.href='board.php'*/;</script>";
 exit();
 }
 ?>
 <table>
 <!--  <?php $title=str_replace(">","&gt",str_replace("<","&lt",$row['boardtitle'])); echo $title; ?> -->
 <tr><th colspan="3">제목 : <?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['boardtitle'])); echo $title; ?></th></tr>
-<tr><th>작성자 : <?php echo $row['nickname']; ?></th><th>작성일 : <?php echo $row['date']; ?></th><th>조회수 : <?php echo $row['hit']; ?></th></tr>
+<tr><th>작성일 : <?php echo $row['date']; ?></th><th>조회수 : <?php echo $row['hit']; ?></th></tr>
 <tr></tr>
 </table>
-<div>내용 : <?php  echo str_replace("＆","&",$row['boardcontents']); ?></div>
+<div>내용 : <?php  echo str_replace("＆","&",$row['boardcontent']); ?></div>
 <div><?php $sql2 = "select *from upload where starttime='".$row['starttime']."' and nickname='".$row['nickname']."'";
 $res2 = $conn->query($sql2);
 while($row2=mysqli_fetch_array($res2)) {
