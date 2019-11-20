@@ -21,7 +21,7 @@ function print_list($page)
                 
                     <th scope="row" class="mobile" style="text-align:center;">' . ($count) . '</th>
                     
-                    <td><a href="../boardView.php?id=' . $listResult[$count - 1] . '" style="color: #000000;">' . $listResult[$count - 1] . '</a></td>
+                    <td><a href="../boardView.php?page='.$page.'&id=' . $listResult[$count - 1] . '" style="color: #000000;">' . $listResult[$count - 1] . '</a></td>
 <!--
 <td class="mobile" style="text-align:center;">' . $page . '</td>
                     <td class="mobile" style="text-align:center;">2018-01-05</td>

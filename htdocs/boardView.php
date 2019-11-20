@@ -86,7 +86,9 @@ if (isset($_POST['submit'])) {
 
                 <button type="submit" name="submit" class="btn btn-primary">글 삭제</button>
 
-                <a href="board.html" class="btn btn-primary">글 목록</a>
+<!--                <a href="board.html?page='.<?php /*echo $_GET['page'];*/?>.'" class="btn btn-primary">글 목록</a> -->
+<!--                <a href= "board.html?page= $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
+-->                <a href="board.html?page=<?php echo $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
