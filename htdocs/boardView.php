@@ -92,8 +92,8 @@ if($res->num_rows!=1) {
 
                 <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary">글 수정</a>
                 <!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */ ?>&method=delete" class="btn btn-primary">글 삭제</a>-->
+                <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary">글 삭제</a>
 
-                <button type="submit" name="submit" class="btn btn-primary">글 삭제</button>
 
 <!--                <a href="board.html?page='.<?php /*echo $_GET['page'];*/?>.'" class="btn btn-primary">글 목록</a> -->
 <!--                <a href= "board.html?page= $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
