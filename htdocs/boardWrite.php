@@ -94,6 +94,7 @@ if (isset($_POST['submit'])) {
 
     }
 
+
     function apply() {
 
         var x1 = document.getElementById("title").value.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")

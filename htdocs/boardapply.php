@@ -7,7 +7,7 @@ $boardtitle = addslashes($obj->boardtitle);
 $boardcontents = addslashes($obj->boardcontents);
 $date = addslashes($obj->date);
 //$starttime = addslashes($obj->starttime);
-$stmt = $conn->prepare("INSERT INTO $obj->table (boardtitle,boardcontents,date)
+$stmt = $conn->prepare("INSERT INTO $obj->table(boardtitle,boardcontents,date)
  VALUES ('$boardtitle','$boardcontents','$date')");
 //$stmt->bind_param('ss')
 
