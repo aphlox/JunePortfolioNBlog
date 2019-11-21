@@ -9,6 +9,6 @@ session_start(); ?>
 <?php } else {?>
 <a href="logout.php">로그아웃</a><br>
 <?php } ?>
-<a href="board.php">게시판</a>
+<a href="../board.php">게시판</a>
 </body>
 </html>

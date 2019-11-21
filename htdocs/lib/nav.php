@@ -16,6 +16,11 @@ function nav()
                               <img style="width: 20px;" src="img/home.svg"><span class="d-none d-md-inline ml-1">메인</span>
                             </a>-->
 
+                <h4 class="text-center text-white">
+                    <a href="login.html">
+                        <span style="color: #00ff0000 ">Admin login</span>
+                    </a>
+                </h4>
                 <a href="./portfolio.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/portfolio.png"><span
                         class="d-none d-md-inline ml-1">Portfolio</span>
@@ -55,6 +60,12 @@ function nav()
                     <!--span 에 안 넣으면 창 크기 줄였을때 글씨가 안 사라지고 이상하게 남아있음-->
                     <img style="width: 25px;" src="img/search.svg"><span class="d-none d-md-inline ml-1">검색</span>
                 </a>
+                
+
+
+
+
+                
                 <div class="collapse" id="search">
                     <div class="input-group p-2" style="background-color: #1c1c1c;">
                         <input type="text" class="form-control" placeholder="내용을 입력하세요.">
@@ -63,4 +74,5 @@ function nav()
             </div>
         </nav>';
 }
+
 ?>
