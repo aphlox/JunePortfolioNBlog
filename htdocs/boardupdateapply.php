@@ -1,14 +1,14 @@
 ﻿<?php
 header("Content-Type: application/json; charset=UTF-8");
 $obj = json_decode($_POST["x"], false);
-$conn = new mysqli("localhost", "root", "a123456&", "web");
+$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $boardtitle = addslashes($obj->boardtitle);
-$boardcontents = addslashes($obj->boardcontents);
+$boardcontent = addslashes($obj->boardcontent);
 $boardnum = $obj->boardnum;
-$stmt = $conn->prepare("UPDATE $obj->table SET boardtitle='$boardtitle',boardcontents='$boardcontents' WHERE boardnum='$boardnum'");
+$stmt = $conn->prepare("UPDATE $obj->table SET boardtitle='$boardtitle',boardcontent='$boardcontent' WHERE boardnum='$boardnum'");
 $stmt->execute();
-$sql = "select *from board where boardtitle ='$boardtitle' and boardcontents ='$boardcontents'
+$sql = "select *from board where boardtitle ='$boardtitle' and boardcontent ='$boardcontent'
 and boardnum ='$boardnum'";
 $res = $conn->query($sql);
 if($res->num_rows > 0) {

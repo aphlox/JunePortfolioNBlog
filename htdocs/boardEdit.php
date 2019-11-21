@@ -78,14 +78,14 @@ $row=mysqli_fetch_array($res);
                 <input type="hidden" name="method" value="put">
                 <input type="hidden" name="oldTitle" value="<?php echo $_GET['id']; ?>">
               <label>제목</label>
-              <input type="text" name = "title"   class="form-control"  placeholder="제목을 입력하세요."
+              <input type="text" name = "title" id="title"  class="form-control"  placeholder="제목을 입력하세요."
                      value="<?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['boardtitle'])); echo $title; ?>">
             </div>
             <div class="form-group">
               <label>내용</label>
-              <textarea name = "content" class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php echo str_replace("＆","&",$row['boardcontent']); ?></textarea>
+              <textarea name = "content" id="editor"  class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php echo str_replace("＆","&",$row['boardcontent']); ?></textarea>
             </div>
-            <button type="submit" name="submit" class="btn btn-primary">글 수정</button>
+            <button onclick="apply(); return false;"  class="btn btn-primary">글 수정</button>
           </form>
           <footer class="text-center" style="max-width: 920px;">
 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
@@ -93,6 +93,40 @@ $row=mysqli_fetch_array($res);
         </main>
       </div>
     </div>
+    <script>
+        function apply() {
+            var x1 = document.getElementById("title").value.replace("+","＋").replace(/#/g,"＃").replace(/&/g,"＆").replace(/=/g,"＝")
+                .replace(/\\/g,"＼");
+            var x2 = document.getElementById("editor").value;
+            var obj, dbParam, xmlhttp, myObj, x;
+            obj={"table":"board","boardtitle":x1,"boardcontent":x2,"boardnum":"<?php echo $boardnum; ?>"};
+            dbParam = JSON.stringify(obj);
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    myObj = JSON.parse(this.responseText);
+                    for (x in myObj) {
+                        if(myObj[x] == '1') {
+                            location.href='board.php';
+                            return false;
+                        } else {
+                            alert("업로드 실패!");
+
+                        }
+                    }
+                }
+            };
+            if((x2.trim() == "<br>")||(x2.trim()=="")||(x1.trim() == "")) {
+                alert("입력된 텍스트가 없습니다.");
+                return false;
+            } else {
+                document.getElementById("editor").innerHTML = "";
+                xmlhttp.open("POST","boardupdateapply.php",true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("x=" + dbParam);
+            }
+        }
+    </script>
     <!-- 제이쿼리 자바스크립트 추가하기 -->
     <script src="js/jquery.min.js"></script>
     <!-- Popper 자바스크립트 추가하기 -->
