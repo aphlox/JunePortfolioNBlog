@@ -59,8 +59,8 @@ $num2=(($page-1)*10)+1;
                     <th scope="col" class="mobile" style="width:55px; text-align:center;">번호</th>
                     <th scope="col" class="mobile" style="text-align:center;">제목</th>
                     <th scope="col" class="mobile" style="text-align:center;">작성일</th>
-                    <th scope="col" class="mobile" style="text-align:center;">조회수</th>
-                </tr>
+<!--                    <th scope="col" class="mobile" style="text-align:center;">조회수</th>
+-->                </tr>
                 </thead>
                 <tbody>
 
@@ -72,7 +72,7 @@ $num2=(($page-1)*10)+1;
                 $title=str_replace(">","&gt",str_replace("<","&lt",$row['boardtitle']));
                 $title2=str_replace(">","&gt",str_replace("<","&lt",$row['boardtitle']));
                 ?>
-                <tr style = "cursor:pointer;" onClick = "location.href='/boardView.php?x=<?php echo $num;?>'"><th><?php echo $num2;?></th><th><?php echo $title;?></th><th><?php echo substr($row['date'],0,11);?></th><th><?php echo $row['hit'];?></th></tr>
+                <tr style = "cursor:pointer;" onClick = "location.href='/boardView.php?x=<?php echo $num;?>'"><th><?php echo $num2;?></th><th><?php echo $title;?></th><th><?php echo substr($row['date'],0,10);?></th></tr>
                 <?php $num2++;}?>
 
 

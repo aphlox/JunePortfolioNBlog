@@ -111,8 +111,8 @@ if (isset($_POST['submit'])) {
             +days[x3.getDay()]+x3.getHours()+"시"+x3.getMinutes()+"분";*/
 
         var obj, dbParam, xmlhttp, myObj, x;
-        obj={"table":"board","boardtitle":x1,"boardcontents":x2,
-            "date":x3,"starttime":x4};
+        obj={"table":"board","boardtitle":x1,"boardcontent":x2,
+            "date":x3};
         dbParam = JSON.stringify(obj);
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
