@@ -89,19 +89,19 @@ $num2=(($page-1)*10)+1;
                     $nowSection = floor((int)(get_this_page()-1)/10);
 
                     $lastSection = floor(ceil($totalboardnum)/100);
-                    $lastPage = floor(ceil($totalboardnum) / 10) + 1;
+                    $lastPage = floor((ceil($totalboardnum) -1)/ 10) + 1;
 
                     if($nowSection ==0){
                              echo'
                     <li class="page-item disabled">
-                <a class="page-link" href="board.html?page='.((($nowSection-1)*10)+1).'">&laquo;</a>
+                <a class="page-link" href="board.php?page='.((($nowSection-1)*10)+1).'">&laquo;</a>
                 </li>
                 ';
                 }
                 else{
                 echo'
                 <li class="page-item ">
-                    <a class="page-link" href="board.html?page='.((($nowSection-1)*10)+1).'">&laquo;</a>
+                    <a class="page-link" href="board.php?page='.((($nowSection-1)*10)+1).'">&laquo;</a>
                 </li>
                 ';
                 }
@@ -117,14 +117,14 @@ $num2=(($page-1)*10)+1;
 
                 if(strcmp(get_this_page(), $count) == 0){
                 echo '
-                <li class="page-item active "><a href="board.html?page='.$count.'"
+                <li class="page-item active "><a href="board.php?page='.$count.'"
                                                  class="page-link mobile">'.$count.'</a></li>
                 ';
 
                 }
                 else{
                 echo '
-                <li class="page-item "><a href="board.html?page='.$count.'" class="page-link mobile">'.$count.'</a></li>
+                <li class="page-item "><a href="board.php?page='.$count.'" class="page-link mobile">'.$count.'</a></li>
                 ';
                 }
                 }
@@ -135,14 +135,14 @@ $num2=(($page-1)*10)+1;
                 if($nowSection ==$lastSection){
                 echo'
                 <li class="page-item disabled">
-                    <a class="page-link" href="board.html?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
+                    <a class="page-link" href="board.php?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
                 </li>
                 ';
                 }
                 else{
                 echo'
                 <li class="page-item ">
-                    <a class="page-link" href="board.html?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
+                    <a class="page-link" href="board.php?page='.((($nowSection+1)*10)+1).'">&raquo;</a>
                 </li>
                 ';
                 }
