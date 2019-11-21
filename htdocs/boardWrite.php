@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
 <script>
     function test() {
 
-        // alert(document.getElementById('editor').value);
+        alert(document.getElementById('editor').value);
         location.href= "board.php";
 
     }
@@ -128,18 +128,17 @@ if (isset($_POST['submit'])) {
             }
         };
 
-        if((x2.value.trim() == "<br>")||(x2.value.trim()=="")||(x1.trim() == "")) {
+        if((x2.trim() == "<br>")||(x2.trim()=="")||(x1.trim() == "")) {
 
             alert("입력된 텍스트가 없습니다.");
 
             return false;
         } else {
             document.getElementById("editor").innerHTML = "";
-            location.href='board.php';
 
-/*            xmlhttp.open("POST","boardapply.php",true);
+            xmlhttp.open("POST","boardapply.php",true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("x=" + dbParam);*/
+            xmlhttp.send("x=" + dbParam);
         }
 
     }
