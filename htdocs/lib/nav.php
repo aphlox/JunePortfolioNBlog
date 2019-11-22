@@ -1,26 +1,32 @@
 <?php
 function nav()
 {
+    session_start();
+
     echo ' <nav class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
             <div class="list-group border-0 card text-center text-md-left">
                 <!--블로그 이름-->
                 <h3 class="padding-64 text-center my-5 py-5 text-white">
-                    <a href="index.html">
+                    <a  href="index.html">
                         <span style="color: #FFFFFF"><b>June\'s<br>Blog</b></span>
                     </a>
-                </h3>
-
-
-                <!--collapsed 특정상황에서 보여지고 안 보여지게 -->
-                <!--            <a href="./index.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                              <img style="width: 20px;" src="img/home.svg"><span class="d-none d-md-inline ml-1">메인</span>
-                            </a>-->
-
-                <h4 class="text-center text-white">
+                </h3>';
+    if ((isset($_SESSION['id'])) && (isset($_SESSION['nickname']))) {
+        echo '   <h4 class="text-center text-white">
+                        <span onclick="logout()" style="color: #FFFFFF ">Admin Mode</span>
+                    
+                </h4>\';';
+    } else {
+        echo '       <h4 class="text-center text-white">
                     <a href="login.html">
                         <span style="color: #00ff0000 ">Admin login</span>
                     </a>
-                </h4>
+                </h4>';
+    }
+
+    echo '
+
+         
                 <a href="./portfolio.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                     <img style="width: 25px;" src="img/portfolio.png"><span
                         class="d-none d-md-inline ml-1">Portfolio</span>
@@ -60,19 +66,89 @@ function nav()
                     <!--span 에 안 넣으면 창 크기 줄였을때 글씨가 안 사라지고 이상하게 남아있음-->
                     <img style="width: 25px;" src="img/search.svg"><span class="d-none d-md-inline ml-1">검색</span>
                 </a>
-                
 
-
-
-
-                
                 <div class="collapse" id="search">
                     <div class="input-group p-2" style="background-color: #1c1c1c;">
                         <input type="text" class="form-control" placeholder="내용을 입력하세요.">
                     </div>
+
                 </div>
+                
+                <div onclick="coffeeSupport()" style="text-align: center; background: #FFFFFF" >
+                     <lottie-player 
+                      src="https://assets3.lottiefiles.com/datafiles/1vlSQNdkFMaQ88l/data.json"  background="white"   speed="1"  style="width: 150px; height: 150px;" loop  autoplay >
+                    </lottie-player>
+                 </div>
+          
             </div>
         </nav>';
 }
 
 ?>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<script>
+    function logout() {
+        var result = confirm("관리자 모드에서 로그아웃 하시겠습니까?");
+        if (result) {
+
+            alert("로그아웃되었습니다");
+            location.href = 'logout.php';
+
+
+        } else {
+        }
+    }
+
+    function coffeeSupport(){
+        var result = confirm("Would you buy me some coffee?");
+        if (result) {
+
+            alert("결제창으로 이동합니다");
+            // location.href = 'logout.php';
+
+
+        } else {
+        }
+
+    }
+    
+    window.onload = function blogHit() {
+        //문자열이라 숫자로 인식하는것 주의하기
+        var allbloghit;
+        var today = new Date();
+        today = String(today);
+        today = today.substring(0,15);
+        var lasthitday;
+        //블로그 총 방문횟수가 있으면 그 값 가져오기
+        //없으면 처음 방문이니깐 1로 설정
+        if(localStorage.getItem('allbloghit')){
+            allbloghit  = localStorage.getItem('allbloghit');
+        } else{
+            allbloghit =1;
+        }
+        if(localStorage.getItem('hitday')){
+            lasthitday = localStorage.getItem('hitday');
+            if(today == lasthitday){
+                //마지막 접속날짜와 오늘 날짜가 같다면
+                //아무것도 하지 않는다
+            } else{
+                //마지막 접속날짜와 오늘 날짜가 다르다면
+                //블로그 방문횟수를 늘려주고
+                //마지막 방문 날짜를 갱신해준다
+                allbloghit = Number(allbloghit);
+                allbloghit = allbloghit +1;
+                localStorage.setItem('hitday', today);
+            }
+        } else{//처음접속이면
+            localStorage.setItem('hitday', today);
+        }
+
+
+        localStorage.setItem('allbloghit', allbloghit);
+
+
+    }
+
+</script>

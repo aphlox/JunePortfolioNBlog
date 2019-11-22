@@ -38,6 +38,7 @@ $num2 = (($page - 1) * 10) + 1;
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!--사이드바 css 적용-->
     <link rel="stylesheet" href="css/sidebar.css">
+
 </head>
 <body>
 <div class="container-fluid">
@@ -86,8 +87,9 @@ $num2 = (($page - 1) * 10) + 1;
                 </tbody>
             </table>
             <div style="max-width: 1080px;">
-
-                <a href="boardWrite.php?starttime=<?php echo time(); ?>" class="btn btn-primary float-right">글쓰기</a>
+                <?php if( (isset($_SESSION['id'])) &&  (isset($_SESSION['nickname'])) ){ ?>
+                    <a href="boardWrite.php?starttime=<?php echo time(); ?>" class="btn btn-primary float-right">글쓰기</a>
+                <?php } ?>
             </div>
             <ul class="pagination">
                 <?php

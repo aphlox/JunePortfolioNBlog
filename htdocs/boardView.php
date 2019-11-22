@@ -34,7 +34,7 @@ mysqli_query ($conn, 'SET NAMES utf8');
 $boardnum=$_GET['x'];
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
 $cookie_value = "1"; //쿠기 값으로 넣어준다.
-setcookie($cookie_name, $cookie_value, time() + (86400), "/"); // 1일 동안 쿠키를 유지하도록 해준다.
+setcookie($cookie_name, $cookie_value, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
 if(!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
     $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
     $res2 = $conn->query($sql2);
