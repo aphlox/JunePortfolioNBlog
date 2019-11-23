@@ -1,4 +1,7 @@
 <?php
+ob_start() ;
+?>
+<?php
 require('lib/nav.php');
 
 $url = "http://192.168.204.138/board.php";
@@ -32,10 +35,12 @@ header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 $boardnum = $_GET['x'];
+
+
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
 $cookie_value = "1"; //쿠기 값으로 넣어준다.
 setcookie($cookie_name, $cookie_value, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
-if (!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
+if (!isset($_COOKIE[$cookie_name])) { //쿠키가 만료되어 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
     $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
     $res2 = $conn->query($sql2);
 }
@@ -46,6 +51,35 @@ if ($res->num_rows != 1) {
     echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";
     exit();
 }
+?>
+<?php
+$likecondition = false;
+if (isset($_COOKIE['likelist'])) {
+    $likelist = explode(',', $_COOKIE['likelist']);
+
+    for ($count = 0; $count < count($likelist); $count++) {
+        if ($likelist[$count] == $boardnum) {
+            $likecondition = true;
+            break;
+        } else {
+            $likecondition = false;
+
+        }
+    }
+
+    //체크용
+    if ($likecondition) {
+        echo "true";
+    } else {
+        echo "false";
+    }
+
+
+} else {
+
+
+}
+
 ?>
 <!doctype html>
 <html>
@@ -91,22 +125,32 @@ if ($res->num_rows != 1) {
                     </p>
                 </div>
                 <span onclick="clickLike()">
-                        <lottie-player
-                                src="https://assets9.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
-                                background="transparent" speed="1" style="width: 100px; height: 100px;">
-                        </lottie-player>
+
+                    <article>
+
+                    </article>
+
+                        <?php if ($likecondition) { ?>
+                            <lottie-player
+                                    src="https://assets9.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
+                                    background="transparent" speed="1" style="width: 100px; height: 100px;" autoplay>
+                            </lottie-player>
+                        <?php } else { ?>
+                            <lottie-player
+                                    src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
+                                    background="transparent" speed="1" style="width: 100px; height: 100px;" >
+                            </lottie-player>
+                        <?php } ?>
 
                     </span>
                 <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
                     수정</a>
-                <!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */ ?>&method=delete" class="btn btn-primary">글 삭제</a>-->
                 <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
                    style="float: right">글 삭제</a>
 
 
-                <!--                <a href="board.html?page='.<?php /*echo $_GET['page'];*/ ?>.'" class="btn btn-primary">글 목록</a> -->
-                <!--                <a href= "board.html?page= $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
-                --> <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary" style="float: right">글 목록</a>
+                <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary" style="float: right">글
+                    목록</a>
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
@@ -120,7 +164,30 @@ if ($res->num_rows != 1) {
 <script>
     function clickLike() {
         alert("hi");
-        const player = document.querySelector('lottie-player');
+        fetch()
+
+        <?php
+        $likelist = explode(',', $_COOKIE['likelist']);
+
+        if($likecondition){
+            //like를 취소하면 상태를 false로 바꾸어주고
+            //likelist 에서 현재 게시물을 빼버리고 다시 쿠기로 설정한다.
+            $likecondition =false;
+            $likelist = array_diff($likelist, array($boardnum));
+            $likelist = array_values($likelist);
+            setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
+
+        }
+        else{
+            //like를 눌렀다면
+            $likecondition =true;
+            array_push($likelist, $boardnum);
+            setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
+
+        }
+        ?>
+
+
 
     }
 

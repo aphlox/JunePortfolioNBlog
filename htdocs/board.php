@@ -4,6 +4,7 @@ require('lib/nav.php');
 ?>
 
 <?php
+ob_start() ;
 header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
