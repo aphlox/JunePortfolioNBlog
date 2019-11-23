@@ -4,45 +4,45 @@ require('lib/nav.php');
 $url = "http://192.168.204.138/board.php";
 
 if (isset($_POST['submit'])) {
-            $id = $_POST["id"];
+    $id = $_POST["id"];
 
-            $form_data = array(
-                'method' => 'DELETE',
-                'id' => $id
-            );
+    $form_data = array(
+        'method' => 'DELETE',
+        'id' => $id
+    );
 
 
-            $str = http_build_query($form_data);
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
-            curl_setopt($ch, CURLOPT_POST,1);
+    $str = http_build_query($form_data);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
+    curl_setopt($ch, CURLOPT_POST, 1);
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
     $output = curl_exec($ch);
-            curl_close($ch);
+    curl_close($ch);
 }
 
 ?>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
-mysqli_query ($conn, 'SET NAMES utf8');
-$boardnum=$_GET['x'];
+mysqli_query($conn, 'SET NAMES utf8');
+$boardnum = $_GET['x'];
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
 $cookie_value = "1"; //쿠기 값으로 넣어준다.
 setcookie($cookie_name, $cookie_value, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
-if(!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
+if (!isset($_COOKIE[$cookie_name])) { //쿠키가 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
     $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
     $res2 = $conn->query($sql2);
 }
 $sql = "select *from board where boardnum='$boardnum'";
 $res = $conn->query($sql);
-$row=mysqli_fetch_array($res);
-if($res->num_rows!=1) {
+$row = mysqli_fetch_array($res);
+if ($res->num_rows != 1) {
     echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";
     exit();
 }
@@ -79,25 +79,34 @@ if($res->num_rows!=1) {
                 ?>
             </div>
             <form method="post" class="pt-3 md-3" style="max-width: 920px">
-                <input type="hidden" name="id" value= "<?php echo $_GET['id']; ?>">
+                <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
                 <div class="form-group">
                     <label>제목</label>
-                    <p class="boardTitle"> <?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['boardtitle'])); echo $title; ?></p>
+                    <p class="boardTitle"> <?php $title = str_replace(">", "&gt;", str_replace("<", "&lt;", $row['boardtitle']));
+                        echo $title; ?></p>
                 </div>
                 <div class="form-group">
                     <label>내용</label>
-                    <p class="boardContent"><?php  echo str_replace("＆","&",$row['boardcontent']); ?>
+                    <p class="boardContent"><?php echo str_replace("＆", "&", $row['boardcontent']); ?>
                     </p>
                 </div>
+                <span onclick="clickLike()">
+                        <lottie-player
+                                src="https://assets9.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
+                                background="transparent" speed="1" style="width: 100px; height: 100px;">
+                        </lottie-player>
 
-                <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary">글 수정</a>
+                    </span>
+                <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
+                    수정</a>
                 <!--                <a href="boardManager.php?id=<?php /*echo $_GET['id']; */ ?>&method=delete" class="btn btn-primary">글 삭제</a>-->
-                <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary">글 삭제</a>
+                <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
+                   style="float: right">글 삭제</a>
 
 
-<!--                <a href="board.html?page='.<?php /*echo $_GET['page'];*/?>.'" class="btn btn-primary">글 목록</a> -->
-<!--                <a href= "board.html?page= $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
--->                <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
+                <!--                <a href="board.html?page='.<?php /*echo $_GET['page'];*/ ?>.'" class="btn btn-primary">글 목록</a> -->
+                <!--                <a href= "board.html?page= $_GET['page']; ?>" class="btn btn-primary">글 목록</a>
+                --> <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary" style="float: right">글 목록</a>
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
@@ -106,6 +115,16 @@ if($res->num_rows!=1) {
         </main>
     </div>
 </div>
+<!--로띠 좋아요-->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script>
+    function clickLike() {
+        alert("hi");
+        const player = document.querySelector('lottie-player');
+
+    }
+
+</script>
 <!-- 제이쿼리 자바스크립트 추가하기 -->
 <script src="js/jquery.min.js"></script>
 <!-- Popper 자바스크립트 추가하기 -->

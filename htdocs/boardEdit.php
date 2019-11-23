@@ -94,6 +94,37 @@ $row=mysqli_fetch_array($res);
       </div>
     </div>
     <script>
+        window.onload = function autoSave() {
+            // 저장할 텍스트 필드의 문장을 가져옵니다.
+            var title = document.getElementById("title");
+            var content = document.getElementById("editor");
+
+            // 만약 autosave키의 값이 있다면
+            // (이는 페이지가 의도치 않게 재시작 되었을 경우에만 해당됨)
+            if (sessionStorage.getItem("titleautosave")) {
+                // 저장된 문장을 텍스트 필드로 복구합니다.
+                title.value = sessionStorage.getItem("titleautosave");
+            }
+            if (sessionStorage.getItem("contentautosave")) {
+                // 저장된 문장을 텍스트 필드로 복구합니다.
+                content.value = sessionStorage.getItem("contentautosave");
+            }
+
+
+            // 텍스트 필드 변경을 확인하고자 이벤트 리스너를 등록 합니다.
+            title.addEventListener("change", function () {
+                // session storage object에 변경된 값을 저장합니다.
+                sessionStorage.setItem("titleautosave", title.value);
+            });
+            content.addEventListener("change", function () {
+                // session storage object에 변경된 값을 저장합니다.
+                sessionStorage.setItem("contentautosave", content.value);
+            });
+
+        };
+
+
+
         function apply() {
             var x1 = document.getElementById("title").value.replace("+","＋").replace(/#/g,"＃").replace(/&/g,"＆").replace(/=/g,"＝")
                 .replace(/\\/g,"＼");
@@ -107,6 +138,8 @@ $row=mysqli_fetch_array($res);
                     myObj = JSON.parse(this.responseText);
                     for (x in myObj) {
                         if(myObj[x] == '1') {
+                            sessionStorage.clear();
+
                             location.href='board.php';
                             return false;
                         } else {
