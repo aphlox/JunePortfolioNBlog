@@ -54,6 +54,7 @@ if ($res->num_rows != 1) {
 ?>
 <?php
 $likecondition = false;
+$likeconditionstring = "false";
 if (isset($_COOKIE['likelist'])) {
     $likelist = explode(',', $_COOKIE['likelist']);
 
@@ -63,15 +64,13 @@ if (isset($_COOKIE['likelist'])) {
             break;
         } else {
             $likecondition = false;
-
         }
     }
 
-    //체크용
     if ($likecondition) {
-        echo "true";
+        $likeconditionstring = "true";
     } else {
-        echo "false";
+        $likeconditionstring = "false";
     }
 
 
@@ -124,25 +123,13 @@ if (isset($_COOKIE['likelist'])) {
                     <p class="boardContent"><?php echo str_replace("＆", "&", $row['boardcontent']); ?>
                     </p>
                 </div>
-                <span onclick="clickLike()">
-
+                <span onclick="clickLike(<?php echo $likeconditionstring?>,<?php echo $boardnum?> )">
                     <article>
 
-                    </article>
+                </article>
+                </span>
 
-                        <?php if ($likecondition) { ?>
-                            <lottie-player
-                                    src="https://assets9.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
-                                    background="transparent" speed="1" style="width: 100px; height: 100px;" autoplay>
-                            </lottie-player>
-                        <?php } else { ?>
-                            <lottie-player
-                                    src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
-                                    background="transparent" speed="1" style="width: 100px; height: 100px;" >
-                            </lottie-player>
-                        <?php } ?>
 
-                    </span>
                 <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
                     수정</a>
                 <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
@@ -162,32 +149,25 @@ if (isset($_COOKIE['likelist'])) {
 <!--로띠 좋아요-->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script>
-    function clickLike() {
+    window.onload = function Like() {
+
         alert("hi");
-        fetch()
+        fetch('likeCheck.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
+            }, body: JSON.stringify({ "likecondition" : <?php echo $likeconditionstring; ?> , "boardnum" : <?php echo $boardnum?>  })}).then(function(response){
+            response.text().then(function(text){
+                document.querySelector('article').innerHTML = text;
+            })
+        });
+    };
+    function clickLike(condition, boardnum) {
+        alert("hi");
 
-        <?php
-        $likelist = explode(',', $_COOKIE['likelist']);
-
-        if($likecondition){
-            //like를 취소하면 상태를 false로 바꾸어주고
-            //likelist 에서 현재 게시물을 빼버리고 다시 쿠기로 설정한다.
-            $likecondition =false;
-            $likelist = array_diff($likelist, array($boardnum));
-            $likelist = array_values($likelist);
-            setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
-
-        }
-        else{
-            //like를 눌렀다면
-            $likecondition =true;
-            array_push($likelist, $boardnum);
-            setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
-
-        }
-        ?>
-
-
+        fetch('likeCheck.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
+            }, body: JSON.stringify({ "likecondition" : condition , "boardnum" : boardnum })}).then(function(response){
+            response.text().then(function(text){
+                document.querySelector('article').innerHTML = text;
+            })
+        });
 
     }
 
