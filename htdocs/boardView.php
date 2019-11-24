@@ -152,15 +152,16 @@ if (isset($_COOKIE['likelist'])) {
     window.onload = function Like() {
 
         alert("hi");
-        fetch('likeCheck.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
+        fetch('likeView.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
             }, body: JSON.stringify({ "likecondition" : <?php echo $likeconditionstring; ?> , "boardnum" : <?php echo $boardnum?>  })}).then(function(response){
             response.text().then(function(text){
                 document.querySelector('article').innerHTML = text;
             })
         });
     };
+
     function clickLike(condition, boardnum) {
-        alert("hi");
+        alert("hello");
 
         fetch('likeCheck.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
             }, body: JSON.stringify({ "likecondition" : condition , "boardnum" : boardnum })}).then(function(response){
