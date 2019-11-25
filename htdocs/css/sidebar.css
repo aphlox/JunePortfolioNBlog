@@ -111,37 +111,52 @@ body {
 }
 
 /*말풍선*/
-.balloon {
-    display: inline-block;
+
+.comment {
+    margin: 50px 0;
+    font-family: NanumSquare;
+}
+.comment div:nth-child(1) {
+    background-color: black;
+    width: 70px;
+    height: 32px;
+    text-align: center;
+    color: #aaa;
+    border-radius: 5px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
     position: relative;
-    background: #cc525d;
-    height: 70px;
-    width: 120px;
-    margin: 0 auto 10px;
-    border-radius: 10px;
 }
-.balloon:after {
+.comment div:nth-child(1):after {
     content: '';
+    width: 20px;
+    height: 20px;
+    background-color: black;
     position: absolute;
-    height: 50px;
-    width: 50px;
-    border-radius: 25px;
-    z-index: -1;
-    background: #ff508d;
-    bottom: -20px;
-    left: 50px;
+    bottom: -10px;
+    left: 20px;
+    transform: rotate(45deg)
 }
-.balloon:before {
-    content: '';
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    border-radius: 25px;
-    z-index: -1;
-    background: #cc4073;
-    bottom: -15px;
-    left: 35px;
+.comment div:nth-child(2) {
+    margin-top: 20px;
 }
+.comment div:nth-child(2) img {
+    border-radius: 50%;
+    width: 60px;
+    float: left;
+    margin-right: 10px;
+}
+.comment div:nth-child(2) p {
+    font-size: 14px;
+    padding-top: 10px;
+}
+.comment div:nth-child(2) p b {
+    display: block;
+}
+.comment div:nth-child(2) p span {
+    font-size: 0.8em;
+}
+
+
 
 
 /*Filter styles*/

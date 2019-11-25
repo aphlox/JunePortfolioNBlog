@@ -123,10 +123,11 @@ if (isset($_COOKIE['likelist'])) {
                     <p class="boardContent"><?php echo str_replace("＆", "&", $row['boardcontent']); ?>
                     </p>
                 </div>
-                <div id ="liketooltip"  class="mt-5" style="height: 1px; width: 100px" data-toggle="tooltip" data-placement="top" title= "<?php echo "like   ".$row["like"]; ?>" >
 
-                </div>
-                <span  id = "like" onclick="clickLike(<?php echo $likeconditionstring ?>,<?php echo $boardnum ?> )">
+                <div id ="liketooltip"   style="height: 30px; width: 300px; margin-left: 20px" >
+<!--                    <div  class="mt-5" style="height: 1px; width: 100px" data-toggle="tooltip" data-placement="top" title= "hi" ></div>
+-->                </div>
+                <span id = "like" onclick="clickLike(<?php echo $likeconditionstring ?>,<?php echo $boardnum ?> )">
 
                 </span>
 
@@ -163,7 +164,9 @@ if (isset($_COOKIE['likelist'])) {
         }).then(function (response) {
             response.text().then(function (text) {
                 document.getElementById('like').innerHTML = text;
-                patchLike();
+                var tag = '&lt;span class="comment"&gt;&lt;div&gt; like <?php echo $row['like'] ?> &lt;/div&gt;&lt;/span&gt;';
+                document.getElementById('liketooltip').innerHTML = htmlUnescape(tag);
+
 
             })
         });
@@ -178,16 +181,43 @@ if (isset($_COOKIE['likelist'])) {
         }).then(function (response) {
             response.text().then(function (text) {
                 document.getElementById('like').innerHTML = text;
-                patchLike();
 
-            })
+                fetch('likeCount.php', {
+                    method: 'POST', headers: {
+                        'Content-Type': 'application/json'
+                    }, body: JSON.stringify({"boardnum": boardnum})
+                }).then(function (response) {
+                    response.text().then(function (text) {
+                        var likecount = text;
+                        var tag = '&lt;span class="comment"&gt;&lt;div&gt; like '+text + '&lt;/div&gt;&lt;/span&gt;';
+                        document.getElementById('liketooltip').innerHTML = htmlUnescape(tag);
+                    })
+                });
+        })
         });
+
+
 
     }
 
-    $(function patchLike() {
-        $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
-    })
+    function htmlEscape(str) {
+        return str
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
+    // I needed the opposite function today, so adding here too:
+    function htmlUnescape(str){
+        return str
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&');
+    }
 
 </script>
 <!-- 제이쿼리 자바스크립트 추가하기 -->
@@ -197,9 +227,9 @@ if (isset($_COOKIE['likelist'])) {
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
 <script>
-    $(function () {
+/*    $(function () {
         $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
-    })
+    })*/
 </script>
 
 </body>
