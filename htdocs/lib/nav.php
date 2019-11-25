@@ -57,9 +57,14 @@ function nav()
                 </a>
 
                 <div class="collapse" id="search">
+                <form name="search">
                     <div class="input-group p-2" style="background-color: #1c1c1c;">
-                        <input type="text" class="form-control" placeholder="내용을 입력하세요.">
+             
+                        <input name="searchtext" type="text" class="form-control" placeholder="내용을 입력하세요.">
+
                     </div>
+                </form>
+
                 </div>
                 
 
@@ -85,10 +90,10 @@ function nav()
         }
     }
 
-    function coffeeSupport(){
-        var allbloghit  = localStorage.getItem('allbloghit');
+    function coffeeSupport() {
+        var allbloghit = localStorage.getItem('allbloghit');
 
-        var result = confirm("June's Blog에 "+ allbloghit+"번째 방문을 환영합니다 \n게시글들을 읽고 도움이 되셨다면 후원부탁드립니다!\n감사합니다 :) ");
+        var result = confirm("June's Blog에 " + allbloghit + "번째 방문을 환영합니다 \n게시글들을 읽고 도움이 되셨다면 후원부탁드립니다!\n감사합니다 :) ");
         if (result) {
             alert("결제창으로 이동합니다");
             // location.href = 'logout.php';
@@ -98,35 +103,35 @@ function nav()
         }
 
     }
-    
+
     window.onload = function blogHit() {
         //문자열이라 숫자로 인식하는것 주의하기
         var allbloghit;
         var today = new Date();
         today = String(today);
-        today = today.substring(0,15);
+        today = today.substring(0, 15);
         var lasthitday;
         //블로그 총 방문횟수가 있으면 그 값 가져오기
         //없으면 처음 방문이니깐 1로 설정
-        if(localStorage.getItem('allbloghit')){
-            allbloghit  = localStorage.getItem('allbloghit');
-        } else{
-            allbloghit =1;
+        if (localStorage.getItem('allbloghit')) {
+            allbloghit = localStorage.getItem('allbloghit');
+        } else {
+            allbloghit = 1;
         }
-        if(localStorage.getItem('hitday')){
+        if (localStorage.getItem('hitday')) {
             lasthitday = localStorage.getItem('hitday');
-            if(today == lasthitday){
+            if (today == lasthitday) {
                 //마지막 접속날짜와 오늘 날짜가 같다면
                 //아무것도 하지 않는다
-            } else{
+            } else {
                 //마지막 접속날짜와 오늘 날짜가 다르다면
                 //블로그 방문횟수를 늘려주고
                 //마지막 방문 날짜를 갱신해준다
                 allbloghit = Number(allbloghit);
-                allbloghit = allbloghit +1;
+                allbloghit = allbloghit + 1;
                 localStorage.setItem('hitday', today);
             }
-        } else{//처음접속이면
+        } else {//처음접속이면
             localStorage.setItem('hitday', today);
         }
 
@@ -135,5 +140,12 @@ function nav()
 
 
     }
+
+    function press(f) {
+        if (f.keyCode == 13) { //javascript에서는 13이 enter키를 의미함
+            search.submit(); //formname에 사용자가 지정한 form의 name입력
+        }
+    }
+
 
 </script>

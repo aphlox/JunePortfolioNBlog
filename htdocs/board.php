@@ -27,6 +27,10 @@ $currentpagenum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번
 $sql2 = "select *from board order by boardnum asc limit $currentpagenum,10";
 $res2 = $conn->query($sql2) or die(mysqli_error($conn));
 $num2 = (($page - 1) * 10) + 1;
+
+$where = "title like as";
+$sql3 = "select *from board where boardtitle like '%ㅇ%' order by boardnum asc limit $currentpagenum,10";
+$res3 = $conn->query($sql3) or die(mysqli_error($conn));
 ?>
 
 <!doctype html>
