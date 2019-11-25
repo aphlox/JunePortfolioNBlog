@@ -131,11 +131,13 @@ if (isset($_COOKIE['likelist'])) {
 
                 </span>
 
+                <?php if( (isset($_SESSION['id'])) &&  (isset($_SESSION['nickname'])) ){ ?>
+                    <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
+                        수정</a>
+                    <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
+                       style="float: right">글 삭제</a>
+                <?php } ?>
 
-                <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
-                    수정</a>
-                <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
-                   style="float: right">글 삭제</a>
 
 
                 <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary" style="float: right">글
