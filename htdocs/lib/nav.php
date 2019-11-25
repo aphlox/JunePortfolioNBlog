@@ -43,20 +43,9 @@ function nav()
                               <a href="userLogout.html" class="list-group-item" data-parent="#sidebar">로그아웃</a>
                             </div>-->
                 <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                    <img style="width: 25px;" src="img/android.png"><span class="d-none d-md-inline ml-1">Android</span>
+                    <img style="width: 25px;" src="img/android.png"><span class="d-none d-md-inline ml-1">개발자노트</span>
                 </a>
-                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                    <img style="width: 25px;" src="img/java.png"><span class="d-none d-md-inline ml-1">Java</span>
-                </a>
-                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                    <img style="width: 25px;" src="img/php.png"><span class="d-none d-md-inline ml-1">Php</span>
-                </a>
-                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                    <img style="width: 25px;" src="img/python.png"><span class="d-none d-md-inline ml-1">Python</span>
-                </a>
-                <a href="board.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
-                    <img style="width: 25px;" src="img/unity.png"><span class="d-none d-md-inline ml-1">Unity</span>
-                </a>
+
 
                 <!--            <a href="qna.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                               <img style="width: 25px;" src="img/message.svg"><span class="d-none d-md-inline ml-1">Q & A</span>
@@ -73,11 +62,7 @@ function nav()
                     </div>
                 </div>
                 
-                <div onclick="coffeeSupport()" style="text-align: center; background: #FFFFFF" >
-                     <lottie-player 
-                      src="https://assets3.lottiefiles.com/datafiles/1vlSQNdkFMaQ88l/data.json"  background="white"   speed="1"  style="width: 150px; height: 150px;" loop  autoplay >
-                    </lottie-player>
-                 </div>
+
           
             </div>
         </nav>';
@@ -101,9 +86,10 @@ function nav()
     }
 
     function coffeeSupport(){
-        var result = confirm("Would you buy me some coffee?");
-        if (result) {
+        var allbloghit  = localStorage.getItem('allbloghit');
 
+        var result = confirm("June's Blog에 "+ allbloghit+"번째 방문을 환영합니다 \n게시글들을 읽고 도움이 되셨다면 후원부탁드립니다!\n감사합니다 :) ");
+        if (result) {
             alert("결제창으로 이동합니다");
             // location.href = 'logout.php';
 

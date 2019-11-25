@@ -143,9 +143,13 @@ if (isset($_COOKIE['likelist'])) {
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
-                <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
-            </footer>
+                <div onclick="coffeeSupport()" style="text-align: center; background: #FFFFFF" >
+                    <lottie-player
+                            src="https://assets3.lottiefiles.com/datafiles/1vlSQNdkFMaQ88l/data.json"  background="white"   speed="1"  style="width: 150px; height: 150px;" loop  autoplay >
+                    </lottie-player>
+                </div>            </footer>
         </main>
+
     </div>
 </div>
 <!--로띠 좋아요-->
