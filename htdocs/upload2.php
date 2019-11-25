@@ -28,7 +28,7 @@ if (file_exists($target_file)) {
         }
  if(move_uploaded_file($_FILES["file"]["tmp_name"][$i], $target_file)) {
 $sql = "INSERT INTO upload(starttime,realname,changename)
-VALUES ('".$_POST['nickname']."','".$_POST['time']."','".$filename.".$ext"."','$target_file')";
+VALUES ('".$_POST['time']."','".$filename.".$ext"."','$target_file')";
             $res = $conn->query($sql);
         } else {
             echo "<script>parent.alert('업로드를 성공하지 못했습니다.');</script>";

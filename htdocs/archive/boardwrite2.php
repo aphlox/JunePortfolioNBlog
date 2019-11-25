@@ -13,7 +13,7 @@ session_start(); ?>
 <textarea id="title"></textarea>
 <div style="border:1px solid; height:400px; overflow:auto;" id="editor" contentEditable="true"></div>
 <div id="demo"></div>
-<form action="../upload.php" method="post" enctype="multipart/form-data" target="test">
+<form action="../upload2.php" method="post" enctype="multipart/form-data" target="test">
 <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
 <input type="hidden" name="time" value="<?php echo $_GET['starttime']; ?>">
 </form>

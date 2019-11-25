@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
-    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>-->
 </head>
 <body>
 <div class="container-fluid">
@@ -76,16 +76,18 @@ if (isset($_POST['submit'])) {
                               style="height: 320px;"></textarea>
                     <script>
                         CKEDITOR.replace( 'content' ,{
-                            filebrowserUploadUrl: '/uploader/upload.php'
+                            filebrowserUploadUrl: '/lib/upload.php'
                         });
                     </script>
-                </div>
-                <!--                <form action="upload.php"  method="post" enctype="multipart/form-data" target="test">
+<!--                </div>
+                <form action="upload.php" method="post" enctype="multipart/form-data" target="test">
                     <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
-                    <input type="hidden" name="time" value="<?php /*echo $_GET['starttime']; */ ?>">
+                    <input type="hidden" name="time" value="<?php /*echo $_GET['starttime']; */?>">
                 </form>
                 <iframe name="test"></iframe>-->
-                <!--                <button type="submit" style="float: right" name="submit" class="btn btn-primary">글 쓰기</button>-->
+
+
+
                 <button type="submit" style="float: right" onclick="apply(); return false;" class="btn btn-primary">글 쓰기</button>
                 <!--                <button type="submit" style="float: right" name="submit" class="btn btn-primary">파일 업로드</button>-->
 

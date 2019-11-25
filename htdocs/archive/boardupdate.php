@@ -23,7 +23,7 @@ $row=mysqli_fetch_array($res);
 <div style="border:1px solid; height:400px; overflow:auto;" id="editor" contentEditable="true"><?php echo str_replace('＆','&',$row['boardcontents']); ?></div>
 
 <div id="demo"></div>
-<form action="../upload.php" method="post" enctype="multipart/form-data" target="test">
+<form action="../upload2.php" method="post" enctype="multipart/form-data" target="test">
 <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
 <input type="hidden" name="nickname" value="<?php echo $_SESSION['nickname']; ?>">
 <input type="hidden" name="time" value="<?php echo $row['starttime']; ?>">
