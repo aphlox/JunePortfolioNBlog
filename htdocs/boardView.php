@@ -89,6 +89,8 @@ if (isset($_COOKIE['likelist'])) {
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
+    <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -120,8 +122,33 @@ if (isset($_COOKIE['likelist'])) {
                 </div>
                 <div class="form-group">
                     <label>내용</label>
-                    <p class="boardContent"><?php echo str_replace("＆", "&", $row['boardcontent']); ?>
+                    <script>
+                        var editor;
+
+                        // The instanceReady event is fired when an instance of CKEditor has finished
+                        // its initialization.
+                        CKEDITOR.on('instanceReady', function(ev) {
+                            editor = ev.editor;
+
+
+
+                            editor.setReadOnly(true);
+                            CKEDITOR.replace( 'editor1', {toolbarStartupExpanded : false} );
+
+                        });
+
+
+                    </script>
+                    <p>
+                        <input id="readOnlyOn" onclick="toggleReadOnly();" type="button" value="Make CKEditor read-only" style="display:none">
+                        <input id="readOnlyOff" onclick="toggleReadOnly( false );" type="button" value="Make CKEditor editable again" style="display:none">
                     </p>
+                    <textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10">
+                        <?php echo str_replace("＆", "&", $row['boardcontent']); ?>
+                    </textarea>
+
+
+
                 </div>
 
                 <div id ="liketooltip"   style="height: 30px; width: 300px; margin-left: 20px" >
@@ -145,10 +172,13 @@ if (isset($_COOKIE['likelist'])) {
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
-                <div onclick="coffeeSupport()" style="text-align: center; background: #FFFFFF" >
+                <div onclick="coffeeSupport()"  style="width: 100%; text-align: center; background: #FFFFFF; display: table; height: 100px; overflow: hidden;" >
+                    <div style=" display: inline-block; vertical-align: middle;">
                     <lottie-player
                             src="https://assets3.lottiefiles.com/datafiles/1vlSQNdkFMaQ88l/data.json"  background="white"   speed="1"  style="width: 150px; height: 150px;" loop  autoplay >
                     </lottie-player>
+                        <div> <p style="font-family: 'Yu Gothic'">Buy Me a coffee? </p></div>
+                    </div>
                 </div>            </footer>
         </main>
 

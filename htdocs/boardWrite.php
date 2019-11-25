@@ -27,6 +27,9 @@ if (isset($_POST['submit'])) {
 ?>
 
 
+
+
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -36,6 +39,7 @@ if (isset($_POST['submit'])) {
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/sidebar.css">
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -68,8 +72,13 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="form-group">
                     <label>내용</label>
-                    <textarea name="content" id="editor" class="form-control" placeholder="내용을 입력하세요."
+                    <textarea name="content" id="editor1" class="form-control" placeholder="내용을 입력하세요."
                               style="height: 320px;"></textarea>
+                    <script>
+                        CKEDITOR.replace( 'content' ,{
+                            filebrowserUploadUrl: '/uploader/upload.php'
+                        });
+                    </script>
                 </div>
                 <!--                <form action="upload.php"  method="post" enctype="multipart/form-data" target="test">
                     <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
@@ -77,7 +86,7 @@ if (isset($_POST['submit'])) {
                 </form>
                 <iframe name="test"></iframe>-->
                 <!--                <button type="submit" style="float: right" name="submit" class="btn btn-primary">글 쓰기</button>-->
-                <button style="float: right" onclick="apply(); return false;" class="btn btn-primary">글 쓰기</button>
+                <button type="submit" style="float: right" onclick="apply(); return false;" class="btn btn-primary">글 쓰기</button>
                 <!--                <button type="submit" style="float: right" name="submit" class="btn btn-primary">파일 업로드</button>-->
 
             </form>
@@ -87,11 +96,12 @@ if (isset($_POST['submit'])) {
         </main>
     </div>
 </div>
+
 <script>
     window.onload = function autoSave() {
         // 저장할 텍스트 필드의 문장을 가져옵니다.
         var title = document.getElementById("title");
-        var content = document.getElementById("editor");
+        var content = document.getElementById("editor1");
 
         // 만약 autosave키의 값이 있다면
         // (이는 페이지가 의도치 않게 재시작 되었을 경우에만 해당됨)
@@ -120,7 +130,7 @@ if (isset($_POST['submit'])) {
 
     function test() {
 
-        alert(document.getElementById('editor').value);
+        alert(document.getElementById('editor1').value);
         location.href = "board.php";
 
     }
@@ -130,7 +140,8 @@ if (isset($_POST['submit'])) {
 
         var x1 = document.getElementById("title").value.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
             .replace(/\\/g, "＼");
-        var x2 = document.getElementById('editor').value;
+        // var x2 = document.getElementById('editor1').value;
+        var x2 =  CKEDITOR.instances.editor1.getData();
         /*        var x2 = document.getElementById("editor")innerHTML.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
                     .replace(/\\/g, "＼");*/
 
@@ -170,7 +181,7 @@ if (isset($_POST['submit'])) {
 
             return false;
         } else {
-            document.getElementById("editor").innerHTML = "";
+            document.getElementById("editor1").innerHTML = "";
 
             xmlhttp.open("POST", "boardapply.php", true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -188,5 +199,6 @@ if (isset($_POST['submit'])) {
 <script src="js/popper.min.js"></script>
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
+<script src="ckeditor/ckeditor.js"></script>
 </body>
 </html>
