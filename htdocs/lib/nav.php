@@ -71,7 +71,6 @@ function nav()
                     <div class="input-group p-2" style="background-color: #1c1c1c;">
                         <input type="text" class="form-control" placeholder="내용을 입력하세요.">
                     </div>
-
                 </div>
                 
                 <div onclick="coffeeSupport()" style="text-align: center; background: #FFFFFF" >

@@ -1,7 +1,7 @@
 <?php
 require('lib/nav.php');
 
-$url = "http://192.168.204.138/board.php";
+$url = "http://192.168.204.136/board.php";
 
 if (isset($_POST['submit'])) {
             $id = $_POST["id"];
@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
 
             $str = http_build_query($form_data);
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
+            curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
             curl_setopt($ch, CURLOPT_POST,1);
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 ?>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $boardnum=$_GET['x'];
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
@@ -74,7 +74,7 @@ if($res->num_rows!=1) {
             <div>
                 <?php
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.138/board.php' </script>");
+                    echo("<script>location.href=  'http://192.168.204.136/board.php' </script>");
                 }
                 ?>
             </div>

@@ -5979,7 +5979,7 @@ a.close.disabled {
 .tooltip .arrow::before {
   position: absolute;
   content: "";
-  border-color: transparent;
+  border-color: #2e3133;
   border-style: solid;
 }
 

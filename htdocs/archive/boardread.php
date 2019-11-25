@@ -13,7 +13,7 @@ session_start(); ?>
 
 <?php 
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $boardnum=$_GET['x'];
 $cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.

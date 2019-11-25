@@ -1,10 +1,10 @@
 <?php
-ob_start() ;
+ob_start();
 ?>
 <?php
 require('lib/nav.php');
 
-$url = "http://192.168.204.138/board.php";
+$url = "http://192.168.204.136/board.php";
 
 if (isset($_POST['submit'])) {
     $id = $_POST["id"];
@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 
     $str = http_build_query($form_data);
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
+    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
     curl_setopt($ch, CURLOPT_POST, 1);
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
     curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 ?>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 $boardnum = $_GET['x'];
 
@@ -107,7 +107,7 @@ if (isset($_COOKIE['likelist'])) {
                 <?php
 
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.138/board.php' </script>");
+                    echo("<script>location.href=  'http://192.168.204.136/board.php' </script>");
                 }
                 ?>
             </div>
@@ -123,10 +123,11 @@ if (isset($_COOKIE['likelist'])) {
                     <p class="boardContent"><?php echo str_replace("＆", "&", $row['boardcontent']); ?>
                     </p>
                 </div>
-                <span onclick="clickLike(<?php echo $likeconditionstring?>,<?php echo $boardnum?> )">
-                    <article>
+                <div id ="liketooltip"  class="mt-5" style="height: 1px; width: 100px" data-toggle="tooltip" data-placement="top" title= "<?php echo "like   ".$row["like"]; ?>" >
 
-                </article>
+                </div>
+                <span  id = "like" onclick="clickLike(<?php echo $likeconditionstring ?>,<?php echo $boardnum ?> )">
+
                 </span>
 
 
@@ -151,26 +152,42 @@ if (isset($_COOKIE['likelist'])) {
 <script>
     window.onload = function Like() {
 
-        alert("hi");
-        fetch('likeView.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
-            }, body: JSON.stringify({ "likecondition" : <?php echo $likeconditionstring; ?> , "boardnum" : <?php echo $boardnum?>  })}).then(function(response){
-            response.text().then(function(text){
-                document.querySelector('article').innerHTML = text;
+        fetch('likeView.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "likecondition": <?php echo $likeconditionstring; ?> ,
+                "boardnum": <?php echo $boardnum?>  })
+        }).then(function (response) {
+            response.text().then(function (text) {
+                document.getElementById('like').innerHTML = text;
+                patchLike();
+
             })
         });
     };
 
     function clickLike(condition, boardnum) {
-        alert("hello");
 
-        fetch('likeCheck.php',{method: 'POST', headers:{ 'Content-Type': 'application/json'
-            }, body: JSON.stringify({ "likecondition" : condition , "boardnum" : boardnum })}).then(function(response){
-            response.text().then(function(text){
-                document.querySelector('article').innerHTML = text;
+        fetch('likeCheck.php', {
+            method: 'POST', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({"likecondition": condition, "boardnum": boardnum})
+        }).then(function (response) {
+            response.text().then(function (text) {
+                document.getElementById('like').innerHTML = text;
+                patchLike();
+
             })
         });
 
     }
+
+    $(function patchLike() {
+        $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
+    })
 
 </script>
 <!-- 제이쿼리 자바스크립트 추가하기 -->
@@ -179,5 +196,11 @@ if (isset($_COOKIE['likelist'])) {
 <script src="js/popper.min.js"></script>
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
+    })
+</script>
+
 </body>
 </html>

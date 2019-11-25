@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
 
     $str = http_build_query($form_data);
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.138/boardManagerCurl.php");
+    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
     curl_setopt($ch, CURLOPT_POST,1);
 
 //            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 <?php
 $boardnum=$_GET['x'];
 
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $sql = "select *from board where boardnum='$boardnum'";
 $res = $conn->query($sql);
@@ -66,7 +66,7 @@ $row=mysqli_fetch_array($res);
                 <?php
 
                 if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.138/board.php' </script>");
+                    echo("<script>location.href=  'http://192.168.204.136/board.php' </script>");
 
                 }
                 ?>

@@ -1,7 +1,7 @@
 ﻿<?php
 header("Content-Type: application/json; charset=UTF-8");
 $obj = json_decode($_POST["x"], false);
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query ($conn, 'SET NAMES utf8');
 $boardtitle = addslashes($obj->boardtitle);
 $boardcontent = addslashes($obj->boardcontent);

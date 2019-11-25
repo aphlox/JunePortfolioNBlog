@@ -1,5 +1,5 @@
 <?php
-$ip = "http://192.168.204.138";
+$ip = "http://192.168.204.136";
 
 //post로 받은 method에 따라 자료 추가, 수정, 삭제해주기
 if (strcmp($_SERVER['REQUEST_METHOD'], "POST") == 0) {

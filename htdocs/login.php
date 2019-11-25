@@ -1,7 +1,7 @@
 ﻿<?php 
 header("Content-Type: text/html; charset=UTF-8");
 session_start();
-$conn = new mysqli("192.168.204.138", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn,'SET NAMES utf8');
 $id = $_POST['id'];
 $pws = $_POST['password'];

@@ -110,6 +110,38 @@ body {
   padding: 6px;
 }
 
+/*말풍선*/
+.balloon {
+    display: inline-block;
+    position: relative;
+    background: #cc525d;
+    height: 70px;
+    width: 120px;
+    margin: 0 auto 10px;
+    border-radius: 10px;
+}
+.balloon:after {
+    content: '';
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    z-index: -1;
+    background: #ff508d;
+    bottom: -20px;
+    left: 50px;
+}
+.balloon:before {
+    content: '';
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+    z-index: -1;
+    background: #cc4073;
+    bottom: -15px;
+    left: 35px;
+}
 
 
 /*Filter styles*/
