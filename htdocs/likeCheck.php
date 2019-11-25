@@ -96,18 +96,7 @@ else {
 
 }
 
-echo "hello";
-echo $boardnum;
-if($likecondition){
-    echo "true";
-}else{
-    echo "false";
-}
-$sql = "SELECT *from board where boardnum = '$boardnum'";
-$res = $conn->query($sql);
-$row=mysqli_fetch_array($res);
-$likecount = $row['like'];
-echo $likecount;
+
 
 
 ?>

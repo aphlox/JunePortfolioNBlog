@@ -43,14 +43,7 @@ else {
     ;
 
 }
-echo "hello";
-echo $boardnum;
-if($condition){
-    echo "true";
-}else{
-    echo "false";
-}
-echo $likecount;
+
 
 ?>
 
