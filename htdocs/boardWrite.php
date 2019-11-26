@@ -1,35 +1,3 @@
-<?php
-require('lib/nav.php');
-
-if (isset($_POST['submit'])) {
-    $title = $_POST["title"];
-    $content = $_POST['content'];
-
-    $form_data = array(
-        'method' => 'POST',
-        'title' => $title,
-        'content' => $content
-
-    );
-
-    $str = http_build_query($form_data);
-
-
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
-    curl_setopt($ch, CURLOPT_POST, 1);
-//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
-}
-?>
-
-
-
-
-
 <!doctype html>
 <html lang="ko">
 <head>
@@ -38,13 +6,16 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--사이드바 CSS 추가하기-->
     <link rel="stylesheet" href="css/sidebar.css">
+    <!--CK Editor 적용-->
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>-->
 </head>
 <body>
 <div class="container-fluid">
     <div class="row d-flex d-md-block flex-nowrap wrapper">
         <?php
+        /*네비게이션*/
         nav();
         ?>
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
@@ -54,14 +25,7 @@ if (isset($_POST['submit'])) {
             <p class="lead">게시글을 작성합니다.</p>
             <hr>
             <div>
-                <?php
-                if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.136/board.php' </script>");
-
-                }
-                ?>
             </div>
-            <!-- action="http://192.168.204.136/boardManager.php"-->
             <form method="post" class="pt-3 md-3"
                   style="max-width: 920px">
                 <div class="form-group">
@@ -75,12 +39,13 @@ if (isset($_POST['submit'])) {
                     <textarea name="content" id="editor1" class="form-control" placeholder="내용을 입력하세요."
                               style="height: 320px;"></textarea>
                     <script>
+                        /*CK Editor 적용*/
                         CKEDITOR.replace( 'content' ,{
                             filebrowserUploadUrl: '/lib/upload.php'
                         });
                     </script>
-<!--                </div>
-                <form action="upload.php" method="post" enctype="multipart/form-data" target="test">
+              </div>
+                <!--                <form action="upload.php" method="post" enctype="multipart/form-data" target="test">
                     <input type="file" name="file[]" multiple="multiple" onchange="this.form.submit()">
                     <input type="hidden" name="time" value="<?php /*echo $_GET['starttime']; */?>">
                 </form>
@@ -139,20 +104,14 @@ if (isset($_POST['submit'])) {
 
 
     function apply() {
-
+        /*게시판 글 작성 적용하는 메소드 ( 글제목, 내용, 작성날짜)*/
         var x1 = document.getElementById("title").value.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
             .replace(/\\/g, "＼");
-        // var x2 = document.getElementById('editor1').value;
         var x2 =  CKEDITOR.instances.editor1.getData();
-        /*        var x2 = document.getElementById("editor")innerHTML.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
-                    .replace(/\\/g, "＼");*/
+
 
         var x3 = new Date();
         var x4 = <?php echo $_GET['starttime'];?>;
-        /*        var days = ["일요일","월요일","화요일","수요일","목요일","금요일","토요일"];
-                var time;
-                time = x3.getFullYear()+"년"+(x3.getMonth()+1)+"월"+x3.getDate()+"일"
-                    +days[x3.getDay()]+x3.getHours()+"시"+x3.getMinutes()+"분";*/
 
         var obj, dbParam, xmlhttp, myObj, x;
         obj = {
@@ -177,6 +136,7 @@ if (isset($_POST['submit'])) {
             }
         };
 
+        /*글 내용, 제목 비어있나 체크하기*/
         if ((x2.trim() == "<br>") || (x2.trim() == "") || (x1.trim() == "")) {
 
             alert("입력된 텍스트가 없습니다.");
@@ -201,6 +161,7 @@ if (isset($_POST['submit'])) {
 <script src="js/popper.min.js"></script>
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
+<!--CK Editor 자바스크립트 추가하기-->
 <script src="ckeditor/ckeditor.js"></script>
 </body>
 </html>

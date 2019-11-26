@@ -1,4 +1,5 @@
 ﻿<?php
+/*글 수정한거 DB 적용용*/
 header("Content-Type: application/json; charset=UTF-8");
 $obj = json_decode($_POST["x"], false);
 $conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");

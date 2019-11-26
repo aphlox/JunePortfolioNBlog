@@ -1,11 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<style>
-a {
-text-decoration:none; 
-color:black;'
-}
-</style>
+
 <body>
 <?php
 header("Content-Type: text/html; charset=UTF-8");

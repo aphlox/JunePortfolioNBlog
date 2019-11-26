@@ -10,7 +10,7 @@ $boardnum = $data ->boardnum;
 $conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 
-
+//헤당 게시글의 실시간 좋아요 수 적용
 $sql = "SELECT *from board where boardnum = '$boardnum'";
 $res = $conn->query($sql);
 $row=mysqli_fetch_array($res);

@@ -1,50 +1,22 @@
 <?php
 ob_start();
-?>
-<?php
 require('lib/nav.php');
-
-$url = "http://192.168.204.136/board.php";
-
-if (isset($_POST['submit'])) {
-    $id = $_POST["id"];
-
-    $form_data = array(
-        'method' => 'DELETE',
-        'id' => $id
-    );
-
-
-    $str = http_build_query($form_data);
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
-    curl_setopt($ch, CURLOPT_POST, 1);
-//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-    $output = curl_exec($ch);
-    curl_close($ch);
-}
-
 ?>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
-$boardnum = $_GET['x'];
+$boardNum = $_GET['x'];
 
 
-$cookie_name = $boardnum; //쿠키 이름은 게시판 번호로 넣어준다.
-$cookie_value = "1"; //쿠기 값으로 넣어준다.
-setcookie($cookie_name, $cookie_value, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
-if (!isset($_COOKIE[$cookie_name])) { //쿠키가 만료되어 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
-    $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardnum";
+$cookieName = $boardNum; //쿠키 이름은 게시판 번호로 넣어준다.
+$cookieValue = "1"; //쿠기 값으로 넣어준다.
+setcookie($cookieName, $cookieValue, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
+if (!isset($_COOKIE[$cookieName])) { //쿠키가 만료되어 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
+    $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardNum";
     $res2 = $conn->query($sql2);
 }
-$sql = "select *from board where boardnum='$boardnum'";
+$sql = "select *from board where boardnum='$boardNum'";
 $res = $conn->query($sql);
 $row = mysqli_fetch_array($res);
 if ($res->num_rows != 1) {
@@ -53,28 +25,25 @@ if ($res->num_rows != 1) {
 }
 ?>
 <?php
-$likecondition = false;
-$likeconditionstring = "false";
+$likeCondition = false;
+$likeConditionString = "false";
 if (isset($_COOKIE['likelist'])) {
-    $likelist = explode(',', $_COOKIE['likelist']);
+    $likeList = explode(',', $_COOKIE['likelist']);
 
-    for ($count = 0; $count < count($likelist); $count++) {
-        if ($likelist[$count] == $boardnum) {
-            $likecondition = true;
+    for ($count = 0; $count < count($likeList); $count++) {
+        if ($likeList[$count] == $boardNum) {
+            $likeCondition = true;
             break;
         } else {
-            $likecondition = false;
+            $likeCondition = false;
         }
     }
 
-    if ($likecondition) {
-        $likeconditionstring = "true";
+    if ($likeCondition) {
+        $likeConditionString = "true";
     } else {
-        $likeconditionstring = "false";
+        $likeConditionString = "false";
     }
-
-
-} else {
 
 
 }
@@ -96,6 +65,7 @@ if (isset($_COOKIE['likelist'])) {
 <div class="container-fluid">
     <div class="row d-flex d-md-block flex-nowrap wrapper">
         <?php
+        /*네비게이션*/
         nav();
 
         ?>
@@ -106,12 +76,6 @@ if (isset($_COOKIE['likelist'])) {
             <p class="lead">게시글을 확인합니다.</p>
             <hr>
             <div>
-                <?php
-
-                if (isset($output)) {
-                    echo("<script>location.href=  'http://192.168.204.136/board.php' </script>");
-                }
-                ?>
             </div>
             <form method="post" class="pt-3 md-3" style="max-width: 920px">
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
@@ -123,15 +87,14 @@ if (isset($_COOKIE['likelist'])) {
                 <div class="form-group">
                     <label>내용</label>
                     <script>
+                        /*ckEditor 적용*/
                         var editor;
 
                         // The instanceReady event is fired when an instance of CKEditor has finished
                         // its initialization.
                         CKEDITOR.on('instanceReady', function(ev) {
                             editor = ev.editor;
-
-
-
+                            /*읽기 전용모드*/
                             editor.setReadOnly(true);
                             CKEDITOR.replace( 'editor1', {toolbarStartupExpanded : false} );
 
@@ -154,10 +117,10 @@ if (isset($_COOKIE['likelist'])) {
                 <div id ="liketooltip"   style="height: 30px; width: 300px; margin-left: 20px" >
 <!--                    <div  class="mt-5" style="height: 1px; width: 100px" data-toggle="tooltip" data-placement="top" title= "hi" ></div>
 -->                </div>
-                <span id = "like" onclick="clickLike(<?php echo $likeconditionstring ?>,<?php echo $boardnum ?> )">
+                <span id = "like" onclick="clickLike(<?php echo $likeConditionString ?>,<?php echo $boardNum ?> )">
 
                 </span>
-
+                <!--어드민 로그인 시에만 글 수정, 삭제 가능(버튼이 보임)-->
                 <?php if( (isset($_SESSION['id'])) &&  (isset($_SESSION['nickname'])) ){ ?>
                     <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
                         수정</a>
@@ -165,13 +128,13 @@ if (isset($_COOKIE['likelist'])) {
                        style="float: right">글 삭제</a>
                 <?php } ?>
 
-
-
+                <!--게시글이 있던 페이지로 나가지게-->
                 <a href="board.php?page=<?php echo $_GET['page']; ?>" class="btn btn-primary" style="float: right">글
                     목록</a>
 
             </form>
             <footer class="text-center" style="max-width: 920px;">
+                <!--커피 로띠(후원용)-->
                 <div onclick="coffeeSupport()"  style="width: 100%; text-align: center; background: #FFFFFF; display: table; height: 100px; overflow: hidden;" >
                     <div style=" display: inline-block; vertical-align: middle;">
                     <lottie-player
@@ -189,17 +152,20 @@ if (isset($_COOKIE['likelist'])) {
 <script>
     window.onload = function Like() {
 
+        /*처음에 현재 게시글에 대해서 좋아요 유무에 따라 로띠 애니메이션 틀어주기*/
         fetch('likeView.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "likecondition": <?php echo $likeconditionstring; ?> ,
-                "boardnum": <?php echo $boardnum?>  })
+                "likecondition": <?php echo $likeConditionString; ?> ,
+                "boardnum": <?php echo $boardNum?>  })
         }).then(function (response) {
             response.text().then(function (text) {
+                /*좋아요 했을때와 아닐때 로띠 애니메이션 다르게*/
                 document.getElementById('like').innerHTML = text;
+                /*좋아요 갯수*/
                 var tag = '&lt;span class="comment"&gt;&lt;div&gt; like <?php echo $row['like'] ?> &lt;/div&gt;&lt;/span&gt;';
                 document.getElementById('liketooltip').innerHTML = htmlUnescape(tag);
 
@@ -210,14 +176,16 @@ if (isset($_COOKIE['likelist'])) {
 
     function clickLike(condition, boardnum) {
 
+        /*좋아요(엄지 척 로띠 애니메이션) 누를시*/
         fetch('likeCheck.php', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({"likecondition": condition, "boardnum": boardnum})
         }).then(function (response) {
             response.text().then(function (text) {
+                /*좋아요 했을때와 아닐때 로띠 애니메이션 다르게*/
                 document.getElementById('like').innerHTML = text;
-
+                /*좋어요 갯수 실시간 동기화*/
                 fetch('likeCount.php', {
                     method: 'POST', headers: {
                         'Content-Type': 'application/json'
@@ -263,9 +231,7 @@ if (isset($_COOKIE['likelist'])) {
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
 <script>
-/*    $(function () {
-        $('[data-toggle="tooltip"]').tooltip({trigger: 'manual'}).tooltip('show');
-    })*/
+
 </script>
 
 </body>

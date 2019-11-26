@@ -5,6 +5,7 @@ require('lib/nav.php');
 
 <?php
 ob_start() ;
+
 header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
@@ -13,21 +14,23 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
-if (isset($_GET['pagination'])) {
+/*if (isset($_GET['pagination'])) {
     $pagination = $_GET['pagination'];
 } else {
     $pagination = 1;
-}
+}*/
 $sql = "select * from board";
 $res = $conn->query($sql);
+
 $totalboardnum = mysqli_num_rows($res); //총 게시물 수
 $totalpagenum = ceil($totalboardnum / 10); //총 페이지 수 = 총 게시물 수 / 한 페이지당 나타낼 게시물 수
 $totalblocknum = ceil($totalpagenum / 5); //총 블록 수 = 총 페이지 수 / 한 블록에 나타낼 페이지 수
 $currentpagenum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번호-1)*10
-$sql2 = "select *from board order by boardnum asc limit $currentpagenum,10";
+$sql2 = "select *from board order by boardnum desc limit $currentpagenum,10";
 $res2 = $conn->query($sql2) or die(mysqli_error($conn));
 $num2 = (($page - 1) * 10) + 1;
 
+/*검색용*/
 $where = "title like as";
 $sql3 = "select *from board where boardtitle like '%ㅇ%' order by boardnum asc limit $currentpagenum,10";
 $res3 = $conn->query($sql3) or die(mysqli_error($conn));
@@ -72,8 +75,6 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
 
                 <?php
                 //현재 페이지의 게시글 보여주기
-                //                print_list(get_this_page());
-
                 while ($row = mysqli_fetch_array($res2)) {
                     $num = $row['boardnum'];
                     $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['boardtitle']));
@@ -92,6 +93,8 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
                 </tbody>
             </table>
             <div style="max-width: 1080px;">
+                <!--섹션 아이디 로그인 있을때
+                    => 어드민으로 들어와있을 때에만 글쓰기 가능-->
                 <?php if( (isset($_SESSION['id'])) &&  (isset($_SESSION['nickname'])) ){ ?>
                     <a href="boardWrite.php?starttime=<?php echo time(); ?>" class="btn btn-primary float-right">글쓰기</a>
                 <?php } ?>

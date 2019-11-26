@@ -1,31 +1,5 @@
 <?php
 require('lib/nav.php');
-if (isset($_POST['submit'])) {
-
-    $oldTitle = $_POST["oldTitle"];
-    $title = $_POST["title"];
-    $content = $_POST['content'];
-    $form_data = array(
-        'method' => 'PUT',
-        'oldTitle' => $oldTitle,
-        'title' => $title,
-        'content' => $content
-    );
-
-
-
-    $str = http_build_query($form_data);
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://192.168.204.136/boardManagerCurl.php");
-    curl_setopt($ch, CURLOPT_POST,1);
-
-//            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $str);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $output = curl_exec($ch);
-    curl_close($ch);
-}
-
 ?>
 <?php
 $boardnum=$_GET['x'];
@@ -137,6 +111,7 @@ $row=mysqli_fetch_array($res);
                 if (this.readyState == 4 && this.status == 200) {
                     myObj = JSON.parse(this.responseText);
                     for (x in myObj) {
+                        /*성공이면 세션 스토리지 값 지우고 board.php로 이동*/
                         if(myObj[x] == '1') {
                             sessionStorage.clear();
 

@@ -5,10 +5,11 @@ $data = json_decode($request_body);
 //$condition = $data ->likecondition;
 $boardnum = $data ->boardnum;
 
-
-
-
-
+/*좋아요리스트 쿠키가 있으면 해당 쿠키 내용 가져와서 어떤 게시글들
+좋아요 했는지 체크한다. 그리고 그 게시글이 현재 게시글이면
+좋아요 표시를 해준다(좋아요 상태 true)
+string 값을 따로 설정해준것은 삭제 예정
+*/
 if (isset($_COOKIE['likelist'])) {
     $likelist = explode(',', $_COOKIE['likelist']);
 
@@ -57,16 +58,9 @@ if($likecondition){
         exit();
     }*/
 
-    echo ' 
-
-
-<lottie-player
-                                    src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
-                                    background="transparent" speed="1" style="width: 100px; height: 100px;" >
-                            </lottie-player>
-                            <?php $likecondition =false;?>
-                            '
-    ;
+    echo ' <lottie-player src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
+                background="transparent" speed="1" style="width: 100px; height: 100px;" ></lottie-player>
+                <?php $likecondition =false;?>';
 
 }
 else {
@@ -83,16 +77,9 @@ else {
         exit();
     }*/
 
-    echo ' 
-
-
-<lottie-player 
-                                    src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
-                                    background="transparent" speed="1" style="width: 100px; height: 100px;" autoplay >
-                            </lottie-player>
-                            <?php $likecondition =true;?>
-                            '
-    ;
+    echo '<lottie-player src="https://assets4.lottiefiles.com/datafiles/KZAksH53JBd6PNu/data.json"
+            background="transparent" speed="1" style="width: 100px; height: 100px;" autoplay ></lottie-player>
+            <?php $likecondition =true;?>' ;
 
 }
 
