@@ -1,3 +1,7 @@
+<?php
+require('lib/nav.php');
+?>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -9,13 +13,13 @@
     <!--사이드바 CSS 추가하기-->
     <link rel="stylesheet" href="css/sidebar.css">
     <!--CK Editor 적용-->
-    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>-->
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row d-flex d-md-block flex-nowrap wrapper">
         <?php
-        /*네비게이션*/
+        /*네비게이션바*/
         nav();
         ?>
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
@@ -105,18 +109,17 @@
 
     function apply() {
         /*게시판 글 작성 적용하는 메소드 ( 글제목, 내용, 작성날짜)*/
-        var x1 = document.getElementById("title").value.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
+        var boardTitle = document.getElementById("title").value.replace("+", "＋").replace(/#/g, "＃").replace(/&/g, "＆").replace(/=/g, "＝")
             .replace(/\\/g, "＼");
-        var x2 =  CKEDITOR.instances.editor1.getData();
+        var boardContent =  CKEDITOR.instances.editor1.getData();
 
-
-        var x3 = new Date();
-        var x4 = <?php echo $_GET['starttime'];?>;
+        var boardDate = new Date();
+        var startTime = <?php echo $_GET['starttime'];?>;
 
         var obj, dbParam, xmlhttp, myObj, x;
         obj = {
-            "table": "board", "boardtitle": x1, "boardcontent": x2,
-            "date": x3
+            "table": "board", "title": boardTitle, "content": boardContent,
+            "date": boardDate
         };
         dbParam = JSON.stringify(obj);
         xmlhttp = new XMLHttpRequest();
@@ -137,7 +140,7 @@
         };
 
         /*글 내용, 제목 비어있나 체크하기*/
-        if ((x2.trim() == "<br>") || (x2.trim() == "") || (x1.trim() == "")) {
+        if ((boardContent.trim() == "<br>") || (boardContent.trim() == "") || (boardTitle.trim() == "")) {
 
             alert("입력된 텍스트가 없습니다.");
 

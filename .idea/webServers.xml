@@ -2,8 +2,16 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="716092ab-0d7e-4b59-b257-e5db5984d9c9" name="JunePortfolioNBlog" url="http://192.168.204.136">
-        <fileTransfer host="192.168.204.136" port="22" rootFolder="/usr/local/apache" accessType="SFTP">
+      <webServer id="94ba311d-8509-470a-b950-8bf49ae84f21" name="aws" url="http://54.180.115.159">
+        <fileTransfer host="54.180.115.159" port="22" privateKey="C:\Users\LG\Desktop\TeamNova\php\june.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="dd64db82-5ae5-44ae-a32f-0a38715b1cea" name="juneblog" url="http://192.168.204.140">
+        <fileTransfer host="192.168.204.140" port="22" rootFolder="/usr/local/apache" accessType="SFTP">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

@@ -4,7 +4,7 @@ require('lib/nav.php');
 ?>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 $boardNum = $_GET['x'];
 
@@ -13,10 +13,11 @@ $cookieName = $boardNum; //쿠키 이름은 게시판 번호로 넣어준다.
 $cookieValue = "1"; //쿠기 값으로 넣어준다.
 setcookie($cookieName, $cookieValue, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
 if (!isset($_COOKIE[$cookieName])) { //쿠키가 만료되어 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
-    $sql2 = "UPDATE board set hit=hit+1 WHERE boardnum=$boardNum";
-    $res2 = $conn->query($sql2);
+    $sqlHit = "UPDATE board set hit=hit+1 WHERE `index`=$boardNum";
+    $resHit = $conn->query($sqlHit);
 }
-$sql = "select *from board where boardnum='$boardNum'";
+
+$sql = "select *from board where `index`='$boardNum'";
 $res = $conn->query($sql);
 $row = mysqli_fetch_array($res);
 if ($res->num_rows != 1) {
@@ -81,7 +82,7 @@ if (isset($_COOKIE['likelist'])) {
                 <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
                 <div class="form-group">
                     <label>제목</label>
-                    <p class="boardTitle"> <?php $title = str_replace(">", "&gt;", str_replace("<", "&lt;", $row['boardtitle']));
+                    <p class="boardTitle"> <?php $title = str_replace(">", "&gt;", str_replace("<", "&lt;", $row['title']));
                         echo $title; ?></p>
                 </div>
                 <div class="form-group">
@@ -107,7 +108,7 @@ if (isset($_COOKIE['likelist'])) {
                         <input id="readOnlyOff" onclick="toggleReadOnly( false );" type="button" value="Make CKEditor editable again" style="display:none">
                     </p>
                     <textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10">
-                        <?php echo str_replace("＆", "&", $row['boardcontent']); ?>
+                        <?php echo str_replace("＆", "&", $row['content']); ?>
                     </textarea>
 
 
@@ -160,7 +161,7 @@ if (isset($_COOKIE['likelist'])) {
             },
             body: JSON.stringify({
                 "likecondition": <?php echo $likeConditionString; ?> ,
-                "boardnum": <?php echo $boardNum?>  })
+                "index": <?php echo $boardNum?>  })
         }).then(function (response) {
             response.text().then(function (text) {
                 /*좋아요 했을때와 아닐때 로띠 애니메이션 다르게*/
@@ -174,13 +175,13 @@ if (isset($_COOKIE['likelist'])) {
         });
     };
 
-    function clickLike(condition, boardnum) {
+    function clickLike(condition, index) {
 
         /*좋아요(엄지 척 로띠 애니메이션) 누를시*/
         fetch('likeCheck.php', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
-            }, body: JSON.stringify({"likecondition": condition, "boardnum": boardnum})
+            }, body: JSON.stringify({"likecondition": condition, "index": index})
         }).then(function (response) {
             response.text().then(function (text) {
                 /*좋아요 했을때와 아닐때 로띠 애니메이션 다르게*/
@@ -189,7 +190,7 @@ if (isset($_COOKIE['likelist'])) {
                 fetch('likeCount.php', {
                     method: 'POST', headers: {
                         'Content-Type': 'application/json'
-                    }, body: JSON.stringify({"boardnum": boardnum})
+                    }, body: JSON.stringify({"index": index})
                 }).then(function (response) {
                     response.text().then(function (text) {
                         var likecount = text;

@@ -3,7 +3,7 @@ header("Content-Type: application/json; charset=UTF-8");
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
 //$condition = $data ->likecondition;
-$boardnum = $data ->boardnum;
+$boardnum = $data ->index;
 
 /*좋아요리스트 쿠키가 있으면 해당 쿠키 내용 가져와서 어떤 게시글들
 좋아요 했는지 체크한다. 그리고 그 게시글이 현재 게시글이면
@@ -37,7 +37,7 @@ else{
 }
 
 //DB 게시글 좋아요 수 올려주기
-$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 
 
@@ -50,8 +50,8 @@ if($likecondition){
     $likelist = array_values($likelist);
     setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
 
-    $sql2 = "UPDATE board set `like`=`like`-1 WHERE boardnum=$boardnum";
-    $res2 = $conn->query($sql2);
+    $sqlLike = "UPDATE board set `like`=`like`-1 WHERE index=$boardnum";
+    $resLike = $conn->query($sqlLike);
 /*    $row2 = mysqli_fetch_array($res2);
     if ($res2->num_rows != 1) {
         echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";
@@ -69,8 +69,8 @@ else {
     array_push($likelist, $boardnum);
     setcookie('likelist', implode(',', $likelist), time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
 
-    $sql2 = "UPDATE board set `like`=`like`+1 WHERE boardnum=$boardnum";
-    $res2 = $conn->query($sql2);
+    $sqlLike = "UPDATE board set `like`=`like`+1 WHERE index=$boardnum";
+    $resLike = $conn->query($sqlLike);
 /*    $row2 = mysqli_fetch_array($res2);
     if ($res2->num_rows != 1) {
         echo "<script>alert('존재하지 않는 게시물 경로입니다.'); location.href='board.php';</script>";

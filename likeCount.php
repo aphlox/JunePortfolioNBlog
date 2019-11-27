@@ -7,7 +7,7 @@ $boardnum = $data ->boardnum;
 
 
 //DB 게시글 좋아요 수
-$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 
 //헤당 게시글의 실시간 좋아요 수 적용

@@ -1,5 +1,4 @@
 <?php
-require('lib/boardFuction.php');
 require('lib/nav.php');
 ?>
 
@@ -7,7 +6,7 @@ require('lib/nav.php');
 ob_start() ;
 
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("192.168.204.136", "june", "Midarlk3134!", "juneblog");
+$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
@@ -22,18 +21,18 @@ if (isset($_GET['page'])) {
 $sql = "select * from board";
 $res = $conn->query($sql);
 
-$totalboardnum = mysqli_num_rows($res); //총 게시물 수
-$totalpagenum = ceil($totalboardnum / 10); //총 페이지 수 = 총 게시물 수 / 한 페이지당 나타낼 게시물 수
-$totalblocknum = ceil($totalpagenum / 5); //총 블록 수 = 총 페이지 수 / 한 블록에 나타낼 페이지 수
-$currentpagenum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번호-1)*10
-$sql2 = "select *from board order by boardnum desc limit $currentpagenum,10";
-$res2 = $conn->query($sql2) or die(mysqli_error($conn));
-$num2 = (($page - 1) * 10) + 1;
+$totalBoardNum = mysqli_num_rows($res); //총 게시물 수
+$totalPageNum = ceil($totalBoardNum / 10); //총 페이지 수 = 총 게시물 수 / 한 페이지당 나타낼 게시물 수
+$totalBlockNum = ceil($totalPageNum / 5); //총 블록 수 = 총 페이지 수 / 한 블록에 나타낼 페이지 수
+$currentPageNum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번호-1)*10
+$sqlBoard = "select *from board order by `index` desc limit $currentPageNum,10";
+$resBoard = $conn->query($sqlBoard) or die(mysqli_error($conn));
+$numPage = (($page - 1) * 10) + 1;
 
-/*검색용*/
+/*검색용
 $where = "title like as";
-$sql3 = "select *from board where boardtitle like '%ㅇ%' order by boardnum asc limit $currentpagenum,10";
-$res3 = $conn->query($sql3) or die(mysqli_error($conn));
+$sqlSearch = "select *from board where title like '%ㅇ%' order by index asc limit $currentPageNum,10";
+$resSearch = $conn->query($sqlSearch) or die(mysqli_error($conn));*/
 ?>
 
 <!doctype html>
@@ -75,10 +74,9 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
 
                 <?php
                 //현재 페이지의 게시글 보여주기
-                while ($row = mysqli_fetch_array($res2)) {
-                    $num = $row['boardnum'];
-                    $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['boardtitle']));
-                    $title2 = str_replace(">", "&gt", str_replace("<", "&lt", $row['boardtitle']));
+                while ($row = mysqli_fetch_array($resBoard)) {
+                    $num = $row['index'];
+                    $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['title']));
                     ?>
                     <tr style="cursor:pointer;" onClick="location.href='/boardView.php?x=<?php echo $num; ?>&page=<?php echo $page ?>'">
                         <th><?php echo $num; ?></th>
@@ -86,7 +84,7 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
                         <th><?php echo substr($row['date'], 0, 10); ?></th>
                         <th><?php echo $row['hit'];?></th>
                     </tr>
-                    <?php $num2++;
+                    <?php $numPage++;
                 } ?>
 
 
@@ -103,10 +101,10 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
                 <?php
                 //현재 페이지 값을 통해 현재의 section값(ex 1~10, 31~40)을 얻음
                 //-1을 한것은 예를 들어 40페이지면 다음섹션으로 인식돼서
-                $nowSection = floor((int)(get_this_page() - 1) / 10);
+                $nowSection = floor((int)($page - 1) / 10);
 
-                $lastSection = floor(ceil($totalboardnum) / 100);
-                $lastPage = floor((ceil($totalboardnum) - 1) / 10) + 1;
+                $lastSection = floor(ceil($totalBoardNum) / 100);
+                $lastPage = floor((ceil($totalBoardNum) - 1) / 10) + 1;
 
                 if ($nowSection == 0) {
                     echo '
@@ -129,7 +127,7 @@ $res3 = $conn->query($sql3) or die(mysqli_error($conn));
                         break;
                     } else {
 
-                        if (strcmp(get_this_page(), $count) == 0) {
+                        if (strcmp($page, $count) == 0) {
                             echo '
                 <li class="page-item active "><a href="board.php?page=' . $count . '"
                                                  class="page-link mobile">' . $count . '</a></li>

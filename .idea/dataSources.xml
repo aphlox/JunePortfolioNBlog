@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="PortfolioNBlog" uuid="aa302346-be8f-43dc-8e29-8f92060a2862">
+    <data-source source="LOCAL" name="awsjuneblog" uuid="04433c9a-7591-452f-ae4d-4a402c7e79de">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://192.168.204.136:3306/juneblog</jdbc-url>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/juneblog</jdbc-url>
     </data-source>
   </component>
 </project>
