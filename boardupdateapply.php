@@ -7,10 +7,11 @@ mysqli_query ($conn, 'SET NAMES utf8');
 $boardtitle = addslashes($obj->title);
 $boardcontent = addslashes($obj->content);
 $boardnum = $obj->index;
-/*$stmt = $conn->prepare("UPDATE $obj->table SET boardtitle='$boardtitle',boardcontent='$boardcontent' WHERE index='$boardnum'");
-$stmt->execute();*/
+$stmt = $conn->prepare("UPDATE board SET title ='$boardtitle', content ='$boardcontent' WHERE `index` ='$boardnum'");
+$stmt->execute();
+
 $sql = "select *from board where title ='$boardtitle' and content ='$boardcontent'
-and index ='$boardnum'";
+and `index` ='$boardnum'";
 $res = $conn->query($sql);
 if($res->num_rows > 0) {
     echo json_encode('1');
