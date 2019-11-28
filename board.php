@@ -8,20 +8,31 @@ ob_start() ;
 header("Content-Type: text/html; charset=UTF-8");
 $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
 mysqli_query($conn, 'SET NAMES utf8');
+$sql = "select * from board";
+$res = $conn->query($sql);
+$totalBoardNum = mysqli_num_rows($res); //총 게시물 수
+
+$lastPage = floor((ceil($totalBoardNum) - 1) / 10) + 1;
 if (isset($_GET['page'])) {
-    $page = $_GET['page'];
+    /*페이지가 마지막페이지보다 높으면 마지막페이지로 이동*/
+    if($_GET['page'] > $lastPage){
+        $page =$lastPage;
+    }
+    else{
+        $page = $_GET['page'];
+
+    }
 } else {
     $page = 1;
 }
+
 /*if (isset($_GET['pagination'])) {
     $pagination = $_GET['pagination'];
 } else {
     $pagination = 1;
 }*/
-$sql = "select * from board";
-$res = $conn->query($sql);
 
-$totalBoardNum = mysqli_num_rows($res); //총 게시물 수
+
 $totalPageNum = ceil($totalBoardNum / 10); //총 페이지 수 = 총 게시물 수 / 한 페이지당 나타낼 게시물 수
 $totalBlockNum = ceil($totalPageNum / 5); //총 블록 수 = 총 페이지 수 / 한 블록에 나타낼 페이지 수
 $currentPageNum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번호-1)*10
@@ -104,7 +115,7 @@ $resSearch = $conn->query($sqlSearch) or die(mysqli_error($conn));*/
                 $nowSection = floor((int)($page - 1) / 10);
 
                 $lastSection = floor(ceil($totalBoardNum) / 100);
-                $lastPage = floor((ceil($totalBoardNum) - 1) / 10) + 1;
+
 
                 if ($nowSection == 0) {
                     echo '

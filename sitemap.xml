@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/index.html</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/login.html</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/portfolio.html</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php?page=-9</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php?page=1</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php?page=2</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php?page=3</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>http://www.juneportfolionblog.kro.kr/board.php?page=11</loc>
+  <lastmod>2019-11-27T14:10:02+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
