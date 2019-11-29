@@ -67,7 +67,7 @@ function AccessLog()
 
 
 // 접속 Device
-function user_agent()
+function  ()
 {
     $iPod = strpos($_SERVER['HTTP_USER_AGENT'], "iPod");
     $iPhone = strpos($_SERVER['HTTP_USER_AGENT'], "iPhone");
