@@ -46,10 +46,43 @@ require('lib/nav.php');
                 <div id="regions_div" style="width: 900px; height: 500px;"></div>
 
             </div>
+
+            <table style="margin-top: 100px" class="table">
+                <tbody>
+                <tr>
+                    <th class="mobile" scope="col" style="width: 60px; text-align: center;">번호</th>
+                    <th scope="col" style="text-align: center;">제목</th>
+                    <th class="mobile" scope="col" style="width: 80px; text-align: center;">작성자</th>
+                    <th class="mobile" scope="col" style="width: 120px; text-align: center;">작성일</th>
+                </tr>
+                <tr>
+                    <th class="mobile" scope="row" style="text-align: center;">3</th>
+                    <td>종합소득세 20% 할인 이벤트입니다!</td>
+                    <td class="mobile" style="text-align: center;">운영자</td>
+                    <td class="mobile" style="text-align: center;">2018-01-08</td>
+                </tr>
+                <tr>
+                    <th class="mobile" scope="row" style="text-align: center;">2</th>
+                    <td>신규 회원 포인트 적립 이벤트가 시작됩니다.</td>
+                    <td class="mobile" style="text-align: center;">운영자</td>
+                    <td class="mobile" style="text-align: center;">2018-01-07</td>
+                </tr>
+                <tr>
+                    <th class="mobile" scope="row" style="text-align: center;">1</th>
+                    <td>사이트 개설 수수료 10% 이벤트입니다.</td>
+                    <td class="mobile" style="text-align: center;">운영자</td>
+                    <td class="mobile" style="text-align: center;">2018-01-05</td>
+                </tr>
+                <tr>
+                    <td colspan="4"><button class="btn btn-success" data-toggle="modal" data-target="#modal">이벤트 추가</button></td>
+                </tr>
+                </tbody>
+            </table>
             <footer class="text-center" style="max-width: 920px;">
                 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
             </footer>
         </main>
+
     </div>
 </div>
 
@@ -72,31 +105,13 @@ require('lib/nav.php');
 
     function drawRegionsMap() {
 
-        /*            var xmlHttp = new XMLHttpRequest();
-                    xmlHttp.open("POST","checkCountryHit.php",true);
-                    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    xmlHttp.send();
-                    xmlHttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            myObj = JSON.parse(this.responseText);
-                            for (x in myObj) {
-                                if(myObj[x] == '1') {
-                                    sessionStorage.clear();
 
-                                } else {
-                                    alert("업로드 실패!");
-
-                                }
-                            }
-                        }
-                    };*/
 
 
         <?php
         $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
         mysqli_query($conn, 'SET NAMES utf8');
 
-        /*잘 저장되었나 확인*/
         $sql = "select *from vistor";
         $res = $conn->query($sql);
         //현재 페이지의 게시글 보여주기
@@ -121,7 +136,7 @@ require('lib/nav.php');
             $hit = 2;
             while ($row = mysqli_fetch_array($res)) {
                 $hit = $hit + (int)$row['hit'];
-            }ki8
+            }
             //            $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['title']));
             ?>
             [<?php echo "'$country'"; ?> ,<?php echo $hit; ?> ],
