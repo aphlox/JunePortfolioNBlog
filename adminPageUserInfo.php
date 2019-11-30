@@ -86,14 +86,8 @@ require('lib/nav.php');
 
     ?>
 
-
-
-
-
-
-
-    var ctxP = document.getElementById("pieChartOS").getContext('2d');
-    var myPieChart = new Chart(ctxP, {
+    var documentOS = document.getElementById("pieChartOS").getContext('2d');
+    var pieChartOS = new Chart(documentOS, {
         type: 'pie',
         data: {
 
@@ -117,8 +111,8 @@ require('lib/nav.php');
                         }?>
 
                     ],
-                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
-                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"]
+                    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                    hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
                 }
             ]
 
@@ -132,15 +126,45 @@ require('lib/nav.php');
 /*    backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
         hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]*/
 
+    <?php
+    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+    mysqli_query($conn, 'SET NAMES utf8');
 
-    var ctxP = document.getElementById("pieChartBrowser").getContext('2d');
-    var myPieChart = new Chart(ctxP, {
+    $sql = "select *from vistor";
+    $res = $conn->query($sql);
+
+    $arrayBrowser = array();
+    while ($row = mysqli_fetch_array($res)) {
+        array_push($arrayBrowser, $row['browser'] );
+    }
+    $arrayBrowser = array_unique($arrayBrowser);
+
+    ?>
+
+    var documentBrowser = document.getElementById("pieChartBrowser").getContext('2d');
+    var pieChartBrowser = new Chart(documentBrowser, {
         type: 'pie',
         data: {
-            labels: ["10대", "20대", "30대", "40대", "50대", "기타"],
+            labels: [
+
+                <?php
+                foreach ($arrayBrowser as $browser) {
+                    $sql = "select *from vistor where browser = '$browser' ";
+                    $res = $conn->query($sql);
+                    echo "'$browser',";
+                }?>
+            ],
             datasets: [
                 {
-                    data: [332, 228, 124, 32, 8, 75],
+                    data: [
+                        <?php
+                        foreach ($arrayBrowser as $browser) {
+                            $sql = "select *from vistor where browser = '$browser' ";
+                            $res = $conn->query($sql);
+                            echo $res->num_rows.",";
+                        }?>
+
+                    ],
                     backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
                     hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
                 }
