@@ -61,7 +61,7 @@
                 $hit = 2;
                 while ($row = mysqli_fetch_array($res)) {
                     $hit = $hit + (int)$row['hit'];
-                }
+                }ki8
                 //            $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['title']));
                 ?>
                 [<?php echo "'$country'"; ?> ,<?php echo $hit; ?> ],
