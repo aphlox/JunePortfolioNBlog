@@ -13,7 +13,7 @@ $res = $conn->query($sql);
 $row=mysqli_fetch_array($res);
 $likecount = $row['like'];
 
-/*해당 게시글의 좋아요 상태에 따라 활성화되거나 비활성화된 로띠 애니메이션 보여주기*/
+/*해당 게시글의 좋아요 상태에 따라 활성화되거나 비활성화된 로띠 애니메이션 보여주기likeView.php*/
 if($condition){
 
     echo ' 

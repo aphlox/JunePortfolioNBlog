@@ -41,6 +41,7 @@ require('lib/nav.php');
             </div>
         </nav>
         <main id="main" class="col-md-9 float-left col pl-md-5 pt-3 main">
+
             <div class="list-group mt-3">
                 <a href="#" class="list-group-item active">나라별 방문 지수</a>
                 <div id="regions_div" style="width: 900px; height: 500px;"></div>

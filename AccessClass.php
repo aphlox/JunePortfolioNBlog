@@ -55,7 +55,7 @@ function AccessLog()
             VALUES ('$accessIp','$date','$time','$getOS','$getBrowser','$country','1')";
             $conn->query($sql);
     } else { // 접속 기록이 있으면 해당 IP주소의 카운트만 증가시켜라.
-        $sql = "UPDATE vistor SET hit=hit+1 Where ip='" . $accessIp . "'";
+        $sql = "UPDATE vistor SET hit=hit+1 where ip ='$accessIp' and date ='$date'";
          $conn->query($sql);
     }
 
@@ -67,7 +67,7 @@ function AccessLog()
 
 
 // 접속 Device
-function  ()
+function user_agent()
 {
     $iPod = strpos($_SERVER['HTTP_USER_AGENT'], "iPod");
     $iPhone = strpos($_SERVER['HTTP_USER_AGENT'], "iPhone");

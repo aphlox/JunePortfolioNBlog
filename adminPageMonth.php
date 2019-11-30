@@ -87,21 +87,54 @@ require('lib/nav.php');
 <!-- MDB 라이브러리 추가하기 -->
 <script src="./js/mdb.min.js"></script>
 <script>
+    <?php
+
+    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+    mysqli_query($conn, 'SET NAMES utf8');
+
+    $sql = " SELECT MONTH(`date`) AS `month`, sum(`hit`)
+            FROM vistor
+            GROUP BY `month`;";
+    $res = $conn->query($sql);
+
+    ?>
+
+
+
     var ctxL = document.getElementById("lineChart").getContext('2d');
     var myLineChart = new Chart(ctxL, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월","8월"],
+            labels: [
+                <?php
+                while ($row = mysqli_fetch_array($res)) {
+                    echo "'$row[0]월',";
+                }?>
+
+            ],
             datasets: [
                 {
                     label: "유입 방문자",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [530, 5548, 9673, 10230, 19432, 36559, 58575]
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+
+                    data: [
+                        <?php
+                        $sql = " SELECT YEAR(`date`) AS `month`, sum(`hit`)
+                        FROM vistor
+                         GROUP BY `month`;";
+                        $res = $conn->query($sql);
+                        while ($row = mysqli_fetch_array($res)) {
+                            echo "'$row[1]',";
+                        }?>
+
+                    ]
                 }
             ]
         },
