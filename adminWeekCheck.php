@@ -22,8 +22,5 @@ echo str_replace('/','',$row[0]);
 
 ?>
 
-<script>
 
-
-</script>
 

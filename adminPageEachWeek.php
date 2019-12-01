@@ -68,18 +68,18 @@ require('lib/nav.php');
 
             <div style="display : table; margin-top : 15px; margin-left: auto; margin-right: auto">
                 <ul class="pagination">
-                    <li id = "prevWeekBtn" class="page-item">
+                    <li id="prevWeekBtn" class="page-item">
                         <a onclick="prevWeek()" class="page-link">&laquo;</a>
                     </li>
                     <li class="page-item ">
                         <a class="page-link mobile"><?php echo "'$row[0]'~$row[1]"; ?>></a>
                     </li>
-                    <li id = "nextWeekBtn" class="page-item">
+                    <li id="nextWeekBtn" class="page-item">
                         <a onclick="nextWeek()" class="page-link" onclick="">&raquo;</a>
                     </li>
                 </ul>
             </div>
-            <div class="list-group-item">
+            <div class="list-group-item" id = "lineChartParent">
                 <canvas id="lineChart"></canvas>
             </div>
 
@@ -123,18 +123,16 @@ require('lib/nav.php');
     var lastWeekIndex = <?php echo $res->num_rows - 1;?>;
 
 
-
     function thisWeek(date) {
 
         var currentDay = parse(date);
         var theYear = currentDay.getFullYear();
         var theMonth = currentDay.getMonth();
-        var theDate  = currentDay.getDate();
+        var theDate = currentDay.getDate();
         var theDayOfWeek = currentDay.getDay();
 
         var thisWeek = [];
-
-        for(var i=0; i<7; i++) {
+        for (var i = 0; i < 7; i++) {
             var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
             var yyyy = resultDay.getFullYear();
             var mm = Number(resultDay.getMonth()) + 1;
@@ -143,7 +141,7 @@ require('lib/nav.php');
             mm = String(mm).length === 1 ? '0' + mm : mm;
             dd = String(dd).length === 1 ? '0' + dd : dd;
 
-            thisWeek[i] = yyyy + '-' + mm + '-' + dd ;
+            thisWeek[i] = yyyy + '-' + mm + '-' + dd;
         }
 
 
@@ -151,20 +149,16 @@ require('lib/nav.php');
             var y = str.substr(0, 4);
             var m = str.substr(4, 2);
             var d = str.substr(6, 2);
-            return new Date(y,m-1,d);
+            return new Date(y, m - 1, d);
         }
+
         return thisWeek;
     }
 
-
-
-
-
-
-
+    var weekList = [];
+    var weekHitList = [];
+    var lineChartParent = document.getElementById("lineChartParent");
     var ctxL = document.getElementById("lineChart").getContext('2d');
-
-
 
     function prevWeek() {
 
@@ -174,7 +168,7 @@ require('lib/nav.php');
         if (currentWeekIndex == 0) {
             alert("처음 페이지입니다");
         } else {
-            currentWeekIndex = currentWeekIndex -1;
+            currentWeekIndex = currentWeekIndex - 1;
             //TOdo json 형식으로 바꿔서 해당 주차 일자하고 데이터 가져오기
             //없으면 0으로 채워서 넣기
             fetch('adminWeekCheck.php', {
@@ -183,59 +177,80 @@ require('lib/nav.php');
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "currentWeekIndex": currentWeekIndex })
+                    "currentWeekIndex": currentWeekIndex
+                })
             }).then(function (response) {
                 response.text().then(function (text) {
                     alert(text);
-                    alert(thisWeek(text.toString()));
-                    var myLineChart = new Chart(ctxL, {
-                        type: 'bar',
-                        data: {
-                            labels:
-                                thisWeek(text.toString())
-                            ,
-                            datasets: [
-                                {
-                                    label: "유입 방문자",
-                                    backgroundColor: [
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)',
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 206, 86, 0.2)',
-                                        'rgba(75, 192, 192, 0.2)',
-                                        'rgba(153, 102, 255, 0.2)',
-                                        'rgba(255, 159, 64, 0.2)'
 
-                                    ],
+                    weekList = thisWeek(text.toString());
+                    alert(weekList);
 
-
-
-
-
-
-                                    data: [ 7,9,2,1,4,8,3
-
-
-
-                                    ]
-                                }
-                            ]
+                    fetch('adminDayHitCheck.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
                         },
-                        options: {
-                            responsive: true
-                        }
+                        body: JSON.stringify({
+                            "weekList": weekList
+                        })
+                    }).then(function (response) {
+                        response.text().then(function (text) {
+                            alert(text);
+                            weekHitList  =text.split(",");
+
+                            lineChartParent.innerHTML = "<canvas id=\"lineChart\"></canvas>";
+                            var ctxL = document.getElementById("lineChart").getContext('2d');
+
+                            var myLineChart = new Chart(ctxL, {
+                                type: 'bar',
+                                data: {
+                                    labels: weekList
+                                    ,
+                                    datasets: [
+                                        {
+                                            label: "유입 방문자",
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)',
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)',
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)'
+
+                                            ],
+
+
+                                            data: weekHitList
+
+
+
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    responsive: true
+                                }
+                            });
+
+
+
+                        })
                     });
+
+
 
                 })
             });
@@ -252,7 +267,7 @@ require('lib/nav.php');
         if (currentWeekIndex == lastWeekIndex) {
             alert("마지막페이지입니다");
         } else {
-            currentWeekIndex = currentWeekIndex +1;
+            currentWeekIndex = currentWeekIndex + 1;
         }
 
     }
@@ -272,62 +287,7 @@ require('lib/nav.php');
     ?>
 
 
-    var myLineChart = new Chart(ctxL, {
-        type: 'bar',
-        data: {
-            labels: [
-                <?php
-                while ($row = mysqli_fetch_array($resEachDay)) {
-                    echo "'$row[0]',";
-                }?>
 
-            ],
-            datasets: [
-                {
-                    label: "유입 방문자",
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-
-                    ],
-
-                    data: [
-                        <?php
-                        $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
-                        mysqli_query($conn, 'SET NAMES utf8');
-                        $sqlEachDay = "SELECT DATE(date) AS `eachDay`,
-                                sum(`hit`)
-                                FROM vistor
-                                GROUP BY `eachDay`;";
-                        $resEachDay = $conn->query($sqlEachDay);
-                        while ($row = mysqli_fetch_array($resEachDay)) {
-                            echo "'$row[3]',";
-                        }?>
-
-                    ]
-                }
-            ]
-        },
-        options: {
-            responsive: true
-        }
-    });
 </script>
 </body>
 </html>
