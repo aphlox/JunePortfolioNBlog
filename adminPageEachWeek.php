@@ -175,7 +175,8 @@ require('lib/nav.php');
             alert("처음 페이지입니다");
         } else {
             currentWeekIndex = currentWeekIndex -1;
-            /*처음에 현재 게시글에 대해서 좋아요 유무에 따라 로띠 애니메이션 틀어주기*/
+            //TOdo json 형식으로 바꿔서 해당 주차 일자하고 데이터 가져오기
+            //없으면 0으로 채워서 넣기
             fetch('adminWeekCheck.php', {
                 method: 'POST',
                 headers: {
@@ -218,19 +219,12 @@ require('lib/nav.php');
 
                                     ],
 
-                                    data: [
 
-                                        fetch('likeCount.php', {
-                                            method: 'POST', headers: {
-                                                'Content-Type': 'application/json'
-                                            }, body: JSON.stringify({"index": index})
-                                        }).then(function (response) {
-                                            response.text().then(function (text) {
-                                                var likecount = text;
-                                                var tag = '&lt;span class="comment"&gt;&lt;div&gt; like '+text + '&lt;/div&gt;&lt;/span&gt;';
-                                                document.getElementById('liketooltip').innerHTML = htmlUnescape(tag);
-                                            })
-                                        });
+
+
+
+
+                                    data: [ 7,9,2,1,4,8,3
 
 
 
