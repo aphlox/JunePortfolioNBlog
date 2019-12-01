@@ -45,7 +45,7 @@ require('lib/nav.php');
             <div class="container p-3 bg-primary text-white">
                 <div class="row">
                     <div class="col-sm-8 info">
-                        <h4><img src="img/search.svg"> </span>방문자 지수</h4>
+                        <h4><img src="img/search.svg"> </span>연간 방문자 지수</h4>
                     </div>
                     <div class="col-sm-4">
                         <div class="btn-group float-right">
@@ -54,11 +54,11 @@ require('lib/nav.php');
                                 시간 단위 선택
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="./index.html">연간 방문자수</a>
-                                <a class="dropdown-item" href="./event.html">월간 방문자수</a>
-                                <a class="dropdown-item" href="./event.html">주간 방문자수</a>
-                                <a class="dropdown-item" href="./blog.html">일간 방문자수</a>
-                                <a class="dropdown-item" href="./user.html">시간대별 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageYear.php">연간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageMonth.php">월간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageWeek.php">주간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageDayOfWeek.php">일간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageTime.php">시간대별 방문자수</a>
                             </div>
                         </div>
                     </div>

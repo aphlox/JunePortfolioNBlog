@@ -45,7 +45,7 @@ require('lib/nav.php');
             <div class="container p-3 bg-primary text-white">
                 <div class="row">
                     <div class="col-sm-8 info">
-                        <h4><img src="img/search.svg"> </span>방문자 지수</h4>
+                        <h4><img src="img/search.svg"> </span>일간 방문자 지수</h4>
                     </div>
 
                     <div class="col-sm-4">
@@ -55,11 +55,11 @@ require('lib/nav.php');
                                 시간 단위 선택
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="./index.html">연간 방문자수</a>
-                                <a class="dropdown-item" href="./event.html">월간 방문자수</a>
-                                <a class="dropdown-item" href="./event.html">주간 방문자수</a>
-                                <a class="dropdown-item" href="./blog.html">일간 방문자수</a>
-                                <a class="dropdown-item" href="./user.html">시간대별 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageYear.php">연간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageMonth.php">월간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageWeek.php">주간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageDayOfWeek.php">일간 방문자수</a>
+                                <a class="dropdown-item" href="./adminPageTime.php">시간대별 방문자수</a>
                             </div>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ require('lib/nav.php');
                         <a onclick="prevWeek()" class="page-link">&laquo;</a>
                     </li>
                     <li class="page-item ">
-                        <a class="page-link mobile"><?php echo "'$row[0]'~$row[1]"; ?>></a>
+                        <a class="page-link mobile" id = "currentWeekText"></a>
                     </li>
                     <li id="nextWeekBtn" class="page-item">
                         <a onclick="nextWeek()" class="page-link" onclick="">&raquo;</a>
@@ -119,8 +119,10 @@ require('lib/nav.php');
     var nextWeekBtn = document.getElementById('nextWeekBtn');
 
 
-    var currentWeekIndex = 0;
     var lastWeekIndex = <?php echo $res->num_rows - 1;?>;
+    var currentWeekIndex = lastWeekIndex;
+
+    changeChart(lastWeekIndex);
 
 
     function thisWeek(date) {
@@ -137,11 +139,10 @@ require('lib/nav.php');
             var yyyy = resultDay.getFullYear();
             var mm = Number(resultDay.getMonth()) + 1;
             var dd = resultDay.getDate();
-
             mm = String(mm).length === 1 ? '0' + mm : mm;
             dd = String(dd).length === 1 ? '0' + dd : dd;
 
-            thisWeek[i] = yyyy + '-' + mm + '-' + dd;
+            thisWeek[i] = yyyy + '-' + mm + '-' + dd ;
         }
 
 
@@ -155,10 +156,51 @@ require('lib/nav.php');
         return thisWeek;
     }
 
+
+    function thisWeekString( thisWeekArray ) {
+        var thisWeekString = [];
+        var dayString = "";
+        for (var i = 0; i < 7; i++) {
+
+
+            switch (i) {
+                case 0 :
+                    dayString = " (일) ";
+                    break;
+                case 1 :
+                    dayString = " (월) ";
+                    break;
+                case 2 :
+                    dayString = " (화) ";
+                    break;
+                case 3 :
+                    dayString = " (수) ";
+                    break;
+                case 4 :
+                    dayString = " (목) ";
+                    break;
+                case 5 :
+                    dayString = " (금) ";
+                    break;
+                case 6 :
+                    dayString = " (토) ";
+                    break;
+            }
+
+            thisWeekString[i] = thisWeekArray[i] + dayString;
+
+        }
+        return thisWeekString
+
+    }
+
     var weekList = [];
     var weekHitList = [];
+    var weekString =[];
     var lineChartParent = document.getElementById("lineChartParent");
     var ctxL = document.getElementById("lineChart").getContext('2d');
+    var currentWeekText = document.getElementById("currentWeekText");
+
 
     function prevWeek() {
 
@@ -169,122 +211,115 @@ require('lib/nav.php');
             alert("처음 페이지입니다");
         } else {
             currentWeekIndex = currentWeekIndex - 1;
-            //TOdo json 형식으로 바꿔서 해당 주차 일자하고 데이터 가져오기
-            //없으면 0으로 채워서 넣기
-            fetch('adminWeekCheck.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "currentWeekIndex": currentWeekIndex
-                })
-            }).then(function (response) {
-                response.text().then(function (text) {
-                    alert(text);
-
-                    weekList = thisWeek(text.toString());
-                    alert(weekList);
-
-                    fetch('adminDayHitCheck.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            "weekList": weekList
-                        })
-                    }).then(function (response) {
-                        response.text().then(function (text) {
-                            alert(text);
-                            weekHitList  =text.split(",");
-
-                            lineChartParent.innerHTML = "<canvas id=\"lineChart\"></canvas>";
-                            var ctxL = document.getElementById("lineChart").getContext('2d');
-
-                            var myLineChart = new Chart(ctxL, {
-                                type: 'bar',
-                                data: {
-                                    labels: weekList
-                                    ,
-                                    datasets: [
-                                        {
-                                            label: "유입 방문자",
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)',
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)'
-
-                                            ],
-
-
-                                            data: weekHitList
-
-
-
-                                        }
-                                    ]
-                                },
-                                options: {
-                                    responsive: true
-                                }
-                            });
-
-
-
-                        })
-                    });
-
-
-
-                })
-            });
-
+            changeChart(currentWeekIndex);
 
         }
-
     }
 
     function nextWeek() {
         // alert(currentWeekIndex+"last"+ lastWeekIndex);
-        alert(thisWeek("20191101"));
         // nextWeekBtn.disabled = true;
         if (currentWeekIndex == lastWeekIndex) {
             alert("마지막페이지입니다");
         } else {
             currentWeekIndex = currentWeekIndex + 1;
+            changeChart(currentWeekIndex);
         }
 
     }
 
+    function changeChart(currentWeekIndex) {
+        fetch('adminWeekCheck.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "currentWeekIndex": currentWeekIndex
+            })
+        }).then(function (response) {
+            response.text().then(function (text) {
+                // alert(text);
 
-    <?php
+                weekList = thisWeek(text.toString());
+                // alert(weekList);
 
-    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
-    mysqli_query($conn, 'SET NAMES utf8');
+                fetch('adminDayHitCheck.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "weekList": weekList
 
-    $sqlEachDay = "SELECT DATE(date) AS `eachDay`,
-                                sum(`hit`)
-                                FROM vistor
-                                GROUP BY `eachDay`;";
-    $resEachDay = $conn->query($sqlEachDay);
+                    })
+                }).then(function (response) {
+                    response.text().then(function (text) {
+                        // alert(text);
+                        weekHitList  =text.split(",");
+                        currentWeekText.innerText = weekList[0] + " ~ " +weekList[6];
+                        weekString = thisWeekString(weekList);
+                        lineChartParent.innerHTML = "<canvas id=\"lineChart\"></canvas>";
+                        var ctxL = document.getElementById("lineChart").getContext('2d');
 
-    ?>
+                        var myLineChart = new Chart(ctxL, {
+                            type: 'bar',
+                            data: {
+                                labels:  weekString
+                                ,
+                                datasets: [
+                                    {
+                                        label: "유입 방문자",
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)',
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)',
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+
+                                        ],
+
+
+                                        data: weekHitList
+
+
+
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+
+
+                    })
+                });
+
+
+
+            })
+        });
+    }
+
+
+
+
+
 
 
 
