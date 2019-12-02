@@ -13,7 +13,7 @@ $weekHitArray = array();
 
 foreach ($weekList as $day){
     require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
 
     mysqli_query($conn, 'SET NAMES utf8');
 

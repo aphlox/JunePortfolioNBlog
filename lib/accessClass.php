@@ -12,7 +12,7 @@ function AccessLog()
     // 테이블 구조 : uid, ipaddr, date, time, OS, browser, userID, hit
     // SESSION 이 살아있는 동안에는 카운트 안되도록 처리
     require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
     mysqli_query ($conn, 'SET NAMES utf8');
 
     $accessIp = $_SERVER['REMOTE_ADDR'];

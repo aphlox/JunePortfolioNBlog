@@ -38,7 +38,7 @@ else{
 
 //DB 게시글 좋아요 수 올려주기
 require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
 mysqli_query($conn, 'SET NAMES utf8');
 
 

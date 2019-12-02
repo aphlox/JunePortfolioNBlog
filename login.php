@@ -2,7 +2,7 @@
 header("Content-Type: text/html; charset=UTF-8");
 session_start();
 require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
 mysqli_query($conn,'SET NAMES utf8');
 $id = $_POST['id'];
 $pws = $_POST['password'];

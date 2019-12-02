@@ -104,7 +104,7 @@ require('lib/nav.php');
     <?php
 
     require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
     mysqli_query($conn, 'SET NAMES utf8');
 
     $sql = "SELECT DATE_FORMAT(DATE_SUB(`date`, INTERVAL (DAYOFWEEK(`date`)-1) DAY), '%Y/%m/%d') as start,

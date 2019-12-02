@@ -5,7 +5,7 @@ require('lib/nav.php');
 $boardnum=$_GET['x'];
 
 require_once("../conf/dbInfo.php");
-$conn = new mysqli($host, $userName, $passwd , $dbName);
+$conn = dbConn();
 mysqli_query ($conn, 'SET NAMES utf8');
 $sql = "select *from board where `index`='$boardnum'";
 $res = $conn->query($sql);
