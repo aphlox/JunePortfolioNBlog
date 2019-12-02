@@ -75,7 +75,9 @@ require('lib/nav.php');
                     <td class="mobile" style="text-align: center;">2018-01-05</td>
                 </tr>
                 <tr>
-                    <td colspan="4"><button class="btn btn-success" data-toggle="modal" data-target="#modal">이벤트 추가</button></td>
+                    <td colspan="4">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#modal">이벤트 추가</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -111,7 +113,7 @@ require('lib/nav.php');
 
         <?php
         require_once("../conf/dbInfo.php");
-$conn = dbConn();
+        $conn = dbConn();
         mysqli_query($conn, 'SET NAMES utf8');
 
         $sql = "select *from vistor";
@@ -119,7 +121,7 @@ $conn = dbConn();
         //현재 페이지의 게시글 보여주기
         $arrayCountry = array();
         while ($row = mysqli_fetch_array($res)) {
-            array_push($arrayCountry, $row['country'] );
+            array_push($arrayCountry, $row['country']);
         }
         $arrayCountry = array_unique($arrayCountry);
 

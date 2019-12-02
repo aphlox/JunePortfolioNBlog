@@ -123,6 +123,7 @@ $conn = dbConn();
     var lastWeekIndex = <?php echo $res->num_rows - 1;?>;
     var currentWeekIndex = lastWeekIndex;
 
+    /*ajax로 차트 바로 바꾸어줌*/
     changeChart(lastWeekIndex);
 
 
@@ -157,7 +158,7 @@ $conn = dbConn();
         return thisWeek;
     }
 
-
+    /*날짜에 요일 붙여주는 */
     function thisWeekString( thisWeekArray ) {
         var thisWeekString = [];
         var dayString = "";
@@ -202,7 +203,7 @@ $conn = dbConn();
     var ctxL = document.getElementById("lineChart").getContext('2d');
     var currentWeekText = document.getElementById("currentWeekText");
 
-
+    /*전주로 가면서 차트 ajax로 바꾸어준다*/
     function prevWeek() {
 
         // alert(currentWeekIndex+"last"+ lastWeekIndex);
@@ -217,6 +218,7 @@ $conn = dbConn();
         }
     }
 
+    /*다음주로 가면서 차트 ajax로 바꾸어준다*/
     function nextWeek() {
         // alert(currentWeekIndex+"last"+ lastWeekIndex);
         // nextWeekBtn.disabled = true;
@@ -292,12 +294,7 @@ $conn = dbConn();
                                             'rgba(255, 159, 64, 0.2)'
 
                                         ],
-
-
                                         data: weekHitList
-
-
-
                                     }
                                 ]
                             },
@@ -306,12 +303,8 @@ $conn = dbConn();
                             }
                         });
 
-
-
                     })
                 });
-
-
 
             })
         });

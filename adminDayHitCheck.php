@@ -1,14 +1,13 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-$request_body = file_get_contents('php://input');
-$data = json_decode($request_body);
+$requestBody = file_get_contents('php://input');
+$data = json_decode($requestBody);
 $weekList = $data ->weekList;
 
 
 
 
 $weekHitArray = array();
-/*DB 불러오기*/
 
 
 foreach ($weekList as $day){
@@ -23,6 +22,8 @@ $conn = dbConn();
                                         WHERE date = '$day'
                                         GROUP BY `eachDay`;";
     $resEachDay = $conn->query($sqlEachDay);
+    /*요일마다 방문자수를 요청하는데 없으면 방문자수 0
+    있으면 해당 요일의 방문자를 배열에 넣기*/
     if($resEachDay->num_rows ==0 ){
         array_push($weekHitArray, 0);
 
@@ -35,23 +36,9 @@ $conn = dbConn();
 
 }
 
-
 $weekHitString = implode( ',', $weekHitArray );
 echo $weekHitString;
 
-/*for($count = 0 ; $count < count($weekList) ; $count++){
-    if($count == count($weekList)-1 ){
-        echo $weekList[$count];
-    }
-    else{
-        echo "$weekList[$count],";
-    }
-}*/
-
-//echo str_replace('/','',$row[0]);
-
-/*echo "3,7,2,1,5,6,6";*/
-//echo  $weekList[0];
 
 ?>
 

@@ -41,11 +41,11 @@ require('lib/nav.php');
                 <h2>글 쓰기</h2>
             </div>
             <p class="lead">게시글을 작성합니다.</p>
-            <hr>
+
 
 
             <div class="writeboard">
-                <form onsubmit="return writef();" action="write.php" method="post">
+                <form onsubmit="return writef();" action="boardWriteApply.php" method="post">
                     <label>제목</label>
                     <input type="text" name="title" class="form-control mb-4" placeholder="제목을 입력하세요.">
                     <textarea id="summernote" name="contents"></textarea>
@@ -73,40 +73,10 @@ require('lib/nav.php');
         minHeight: 200,
         focus: true,
         lang: 'ko-KR',
-/*        callbacks: {
-            onImageUpload : function(files, editor, welEditable) {
-                console.log('image uplodad:', files);
-                sendFile(files[0], editor, welEditable);
-            },
-        }*/
+
     });
 
-/*    function sendFile(file,editor,welEditable) {
-        data = new FormData();
-        data.append("file", file);
-        $.ajax({
-            url: "saveimage.php", // image 저장 소스
-            data: data,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            success: function(data){
-//       alert(data);
-                var image = $('<img>').attr('src', '' + data); // 에디터에 img 태그로 저장을 하기 위함
-                $('.summernote').summernote("insertNode", image[0]); // summernote 에디터에 img 태그를 보여줌
-//       editor.insertImage(welEditable, data);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log(textStatus+" "+errorThrown);
-            }
-        });
-    }
-    $('form').on('submit', function (e) {
-        e.preventDefault();
-//     alert($('.summernote').summernote('code'));
-//     alert($('.summernote').val());
-    });*/
+
 
 
 
@@ -148,7 +118,6 @@ require('lib/nav.php');
 <script src="js/popper.min.js"></script>
 <!-- 부트스트랩 자바스크립트 추가하기 -->
 <script src="js/bootstrap.min.js"></script>
-<!--CK Editor 자바스크립트 추가하기-->
-<script src="ckeditor/ckeditor.js"></script>
+
 </body>
 </html>

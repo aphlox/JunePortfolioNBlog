@@ -37,13 +37,13 @@ if (isset($_GET['page'])) {
 $totalPageNum = ceil($totalBoardNum / 10); //총 페이지 수 = 총 게시물 수 / 한 페이지당 나타낼 게시물 수
 $totalBlockNum = ceil($totalPageNum / 5); //총 블록 수 = 총 페이지 수 / 한 블록에 나타낼 페이지 수
 $currentPageNum = (($page - 1) * 10); //현재 페이지 번호 = (페이지 번호-1)*10
-$sqlBoard = "select *from board order by `index` desc limit $currentPageNum,10";
+$sqlBoard = "select *from board order by `id` desc limit $currentPageNum,10";
 $resBoard = $conn->query($sqlBoard) or die(mysqli_error($conn));
 $numPage = (($page - 1) * 10) + 1;
 
 /*검색용
 $where = "title like as";
-$sqlSearch = "select *from board where title like '%ㅇ%' order by index asc limit $currentPageNum,10";
+$sqlSearch = "select *from board where title like '%ㅇ%' order by idasc limit $currentPageNum,10";
 $resSearch = $conn->query($sqlSearch) or die(mysqli_error($conn));*/
 ?>
 
@@ -87,7 +87,7 @@ $resSearch = $conn->query($sqlSearch) or die(mysqli_error($conn));*/
                 <?php
                 //현재 페이지의 게시글 보여주기
                 while ($row = mysqli_fetch_array($resBoard)) {
-                    $num = $row['index'];
+                    $num = $row['id'];
                     $title = str_replace(">", "&gt", str_replace("<", "&lt", $row['title']));
                     ?>
                     <tr style="cursor:pointer;" onClick="location.href='/boardView.php?x=<?php echo $num; ?>&page=<?php echo $page ?>'">

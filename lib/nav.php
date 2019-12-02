@@ -67,9 +67,10 @@ echo '
                 <!--            <a href="qna.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
                               <img style="width: 25px;" src="img/message.svg"><span class="d-none d-md-inline ml-1">Q & A</span>
                             </a>-->
+<!--
                 <a href="#search" class="list-group-item d-inline-block collapsed" data-toggle="collapse"
                    data-parent="#sidebar" aria-expanded="false">
-                    <!--span 에 안 넣으면 창 크기 줄였을때 글씨가 안 사라지고 이상하게 남아있음-->
+                    &lt;!&ndash;span 에 안 넣으면 창 크기 줄였을때 글씨가 안 사라지고 이상하게 남아있음&ndash;&gt;
                     <img style="width: 25px;" src="img/search.svg"><span class="d-none d-md-inline ml-1">검색</span>
                 </a>
 
@@ -79,7 +80,8 @@ echo '
                         <input name="searchtext" type="text" class="form-control" placeholder="내용을 입력하세요.">
                     </div>
                 </form>
-                </div>';
+                </div>-->
+';
 
 if ((isset($_SESSION['id'])) && (isset($_SESSION['nickname']))) {
 echo '                <a href="adminPageDayOfWeek.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">

@@ -3,27 +3,24 @@ require_once("../conf/dbInfo.php");
 $conn = dbConn();
 mysqli_query($conn, 'SET NAMES utf8');
 
-$boardContent = $_POST['contents'];
 $boardTitle = $conn->real_escape_string($_POST['title']);
+$boardContent = $_POST['contents'];
+$boardNum =  $_POST['num'];
 $file = $_POST['files'];
+$boardNum = (string)$boardNum;
 
-$boardDate = date("Y-m-d H:i:s");
-
-
-
-
-$sql = "insert into board(title, content, date) VALUES ('$boardContent','$boardTitle', '$boardDate')";
+$sql = "UPDATE board SET title ='$boardTitle', content ='$boardContent' WHERE id = '$boardNum';";
 $result = $conn->query($sql);
-/*if($result===false){
+if($result===false){
     echo "<script>
-          alert('글쓰기에 실패하였습니다.');
+          alert('수정에 실패하였습니다.');
           history.back();
         </script>";
 }else{
     $boardIndex = mysqli_insert_id($conn);
     header('Location: board.php');
     exit;
-}*/
+}
 
 
 

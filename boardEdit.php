@@ -7,7 +7,7 @@ $boardnum=$_GET['x'];
 require_once("../conf/dbInfo.php");
 $conn = dbConn();
 mysqli_query ($conn, 'SET NAMES utf8');
-$sql = "select *from board where `index`='$boardnum'";
+$sql = "select *from board where `id`='$boardnum'";
 $res = $conn->query($sql);
 $row=mysqli_fetch_array($res);
 ?>
@@ -21,6 +21,21 @@ $row=mysqli_fetch_array($res);
     <link rel="stylesheet" href="css/bootstrap.min.css">
       <!--사이드바 css 적용-->
       <link rel="stylesheet" href="css/sidebar.css">
+      <!-- include libraries(jQuery, bootstrap) -->
+      <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+      <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+      <!-- include summernote css/js-->
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+      <!-- include summernote-ko-KR -->
+      <script src="js/summernote-ko-KR.js"></script>
+      <script>
+          var writef = function () {
+              var markup = $('#summernote').summernote('code');
+              return markup;
+          }
+      </script>
   </head>
   <body>
     <div class="container-fluid">
@@ -40,21 +55,23 @@ $row=mysqli_fetch_array($res);
             <div>
 
             </div>
-          <hr>
-            <!--put 메소드로 처리하라고 post로 보내주기-->
-          <form method="post"  class="pt-3 md-3" style="max-width: 920px">
-            <div class="form-group">
-                <input type="hidden" name="method" value="put">
-              <label>제목</label>
-              <input type="text" name = "title" id="title"  class="form-control"  placeholder="제목을 입력하세요."
-                     value="<?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['title'])); echo $title; ?>">
+
+            <div class="writeboard">
+                <form onsubmit="return writef();" action="boardEditApply.php" method="post">
+                    <input name="num" type="hidden" value=<?php echo $_GET['x']?> >
+                    <label>제목</label>
+                    <input type="text" name="title" class="form-control mb-4" placeholder="제목을 입력하세요."
+                           value="<?php $title=str_replace(">","&gt;",str_replace("<","&lt;",$row['title'])); echo $title; ?>">
+                    <textarea id="summernote" name="contents"><?php echo str_replace("＆","&",$row['content']); ?></textarea>
+                    <div align="center">
+                        <button type="submit" style="float: right" class="btn btn-primary mt-4">글 수정</button>
+
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-              <label>내용</label>
-              <textarea name = "content" id="editor"  class="form-control" placeholder="내용을 입력하세요." style="height: 320px;"><?php echo str_replace("＆","&",$row['content']); ?></textarea>
-            </div>
-            <button onclick="apply(); return false;"  class="btn btn-primary">글 수정</button>
-          </form>
+
+
+
           <footer class="text-center" style="max-width: 920px;">
 <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
           </footer>
@@ -62,7 +79,19 @@ $row=mysqli_fetch_array($res);
       </div>
     </div>
     <script>
-        window.onload = function autoSave() {
+
+        $('#summernote').summernote({
+
+            height: 400,
+            maxHeight: null,
+            minHeight: 200,
+            focus: true,
+            lang: 'ko-KR',
+
+        });
+
+
+/*        window.onload = function autoSave() {
             // 저장할 텍스트 필드의 문장을 가져옵니다.
             var title = document.getElementById("title");
             var content = document.getElementById("editor");
@@ -89,45 +118,9 @@ $row=mysqli_fetch_array($res);
                 sessionStorage.setItem("contentautosave", content.value);
             });
 
-        };
+        };*/
 
 
-
-        function apply() {
-            var boardTitle = document.getElementById("title").value.replace("+","＋").replace(/#/g,"＃").replace(/&/g,"＆").replace(/=/g,"＝")
-                .replace(/\\/g,"＼");
-            var boardContent = document.getElementById("editor").value;
-            var obj, dbParam, xmlhttp, myObj, x;
-            obj={"table":"board","title":boardTitle,"content":boardContent,"index":"<?php echo $boardnum; ?>"};
-            dbParam = JSON.stringify(obj);
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    myObj = JSON.parse(this.responseText);
-                    for (x in myObj) {
-                        /*성공이면 세션 스토리지 값 지우고 board.php로 이동*/
-                        if(myObj[x] == '1') {
-                            sessionStorage.clear();
-
-                            location.href='board.php';
-                            return false;
-                        } else {
-                            alert("업로드 실패!");
-
-                        }
-                    }
-                }
-            };
-            if((boardContent.trim() == "<br>")||(boardContent.trim()=="")||(boardTitle.trim() == "")) {
-                alert("입력된 텍스트가 없습니다.");
-                return false;
-            } else {
-                document.getElementById("editor").innerHTML = "";
-                xmlhttp.open("POST","boardupdateapply.php",true);
-                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("x=" + dbParam);
-            }
-        }
     </script>
     <!-- 제이쿼리 자바스크립트 추가하기 -->
     <script src="js/jquery.min.js"></script>

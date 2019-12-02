@@ -14,11 +14,11 @@ $cookieName = $boardNum; //쿠키 이름은 게시판 번호로 넣어준다.
 $cookieValue = "1"; //쿠기 값으로 넣어준다.
 setcookie($cookieName, $cookieValue, time() + (600), "/"); // 10분 동안 쿠키를 유지하도록 해준다.
 if (!isset($_COOKIE[$cookieName])) { //쿠키가 만료되어 삭제되지 않는 이상 조회수는 첫 조회시만 1 증가시켜준다.
-    $sqlHit = "UPDATE board set hit=hit+1 WHERE `index`=$boardNum";
+    $sqlHit = "UPDATE board set hit=hit+1 WHERE `id`=$boardNum";
     $resHit = $conn->query($sqlHit);
 }
 
-$sql = "select *from board where `index`='$boardNum'";
+$sql = "select *from board where `id`='$boardNum'";
 $res = $conn->query($sql);
 $row = mysqli_fetch_array($res);
 if ($res->num_rows != 1) {
@@ -59,8 +59,17 @@ if (isset($_COOKIE['likelist'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- 부트스트랩 CSS 추가하기 -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!--사이드바 CSS 추가하기-->
     <link rel="stylesheet" href="css/sidebar.css">
-    <script src="https://cdn.ckeditor.com/4.13.0/standard-all/ckeditor.js"></script>
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <!-- include summernote css/js-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+    <!-- include summernote-ko-KR -->
+    <script src="js/summernote-ko-KR.js"></script>
 
 </head>
 <body>
@@ -88,29 +97,17 @@ if (isset($_COOKIE['likelist'])) {
                 </div>
                 <div class="form-group">
                     <label>내용</label>
-                    <script>
-                        /*ckEditor 적용*/
-                        var editor;
 
-                        // The instanceReady event is fired when an instance of CKEditor has finished
-                        // its initialization.
-                        CKEDITOR.on('instanceReady', function(ev) {
-                            editor = ev.editor;
-                            /*읽기 전용모드*/
-                            editor.setReadOnly(true);
-                            CKEDITOR.replace( 'editor1', {toolbarStartupExpanded : false} );
-
-                        });
-
-
-                    </script>
                     <p>
                         <input id="readOnlyOn" onclick="toggleReadOnly();" type="button" value="Make CKEditor read-only" style="display:none">
                         <input id="readOnlyOff" onclick="toggleReadOnly( false );" type="button" value="Make CKEditor editable again" style="display:none">
                     </p>
-                    <textarea class="ckeditor" cols="80" id="editor1" name="editor1" rows="10">
+                    <textarea id="summernote" name="contents">
                         <?php echo str_replace("＆", "&", $row['content']); ?>
+
                     </textarea>
+
+
 
 
 
@@ -126,7 +123,7 @@ if (isset($_COOKIE['likelist'])) {
                 <?php if( (isset($_SESSION['id'])) &&  (isset($_SESSION['nickname'])) ){ ?>
                     <a href="boardEdit.php?x=<?php echo $_GET['x']; ?>" class="btn btn-primary" style="float: right">글
                         수정</a>
-                    <a href="boarddelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
+                    <a href="boardDelete.php?boardnum=<?php echo $_GET['x']; ?>" class="btn btn-primary"
                        style="float: right">글 삭제</a>
                 <?php } ?>
 
@@ -152,6 +149,18 @@ if (isset($_COOKIE['likelist'])) {
 <!--로띠 좋아요-->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 <script>
+    $('#summernote').summernote({
+        toolbar :false,
+        height: 400,
+        maxHeight: null,
+        minHeight: 200,
+        focus: true,
+        lang: 'ko-KR',
+
+    });
+    $('#summernote').summernote('disable');
+
+
     window.onload = function Like() {
 
         /*처음에 현재 게시글에 대해서 좋아요 유무에 따라 로띠 애니메이션 틀어주기*/
@@ -182,7 +191,7 @@ if (isset($_COOKIE['likelist'])) {
         fetch('likeCheck.php', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
-            }, body: JSON.stringify({"likecondition": condition, "index": index})
+            }, body: JSON.stringify({"likeCondition": condition, "index": index})
         }).then(function (response) {
             response.text().then(function (text) {
                 /*좋아요 했을때와 아닐때 로띠 애니메이션 다르게*/
@@ -194,7 +203,7 @@ if (isset($_COOKIE['likelist'])) {
                     }, body: JSON.stringify({"index": index})
                 }).then(function (response) {
                     response.text().then(function (text) {
-                        var likecount = text;
+                        var likeCount = text;
                         var tag = '&lt;span class="comment"&gt;&lt;div&gt; like '+text + '&lt;/div&gt;&lt;/span&gt;';
                         document.getElementById('liketooltip').innerHTML = htmlUnescape(tag);
                     })

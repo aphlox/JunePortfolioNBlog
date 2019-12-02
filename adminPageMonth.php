@@ -69,13 +69,12 @@ require('lib/nav.php');
             </div>
 
 
-
-            </div>
-            <footer class="text-center" style="max-width: 920px;">
-                <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
-            </footer>
-        </main>
     </div>
+    <footer class="text-center" style="max-width: 920px;">
+        <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
+    </footer>
+    </main>
+</div>
 </div>
 
 <!-- 제이쿼리 자바스크립트 추가하기 -->
@@ -90,7 +89,7 @@ require('lib/nav.php');
     <?php
 
     require_once("../conf/dbInfo.php");
-$conn = dbConn();
+    $conn = dbConn();
     mysqli_query($conn, 'SET NAMES utf8');
 
     $sql = " SELECT MONTH(`date`) AS `month`, sum(`hit`)

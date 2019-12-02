@@ -1,9 +1,9 @@
 <?php
 header("Content-Type: application/json; charset=UTF-8");
-$request_body = file_get_contents('php://input');
-$data = json_decode($request_body);
+$requestBody = file_get_contents('php://input');
+$data = json_decode($requestBody);
 //$condition = $data ->likecondition;
-$boardnum = $data ->index;
+$boardNum = $data ->index;
 
 /*좋아요리스트 쿠키가 있으면 해당 쿠키 내용 가져와서 어떤 게시글들
 좋아요 했는지 체크한다. 그리고 그 게시글이 현재 게시글이면
@@ -11,28 +11,28 @@ $boardnum = $data ->index;
 string 값을 따로 설정해준것은 삭제 예정
 */
 if (isset($_COOKIE['likelist'])) {
-    $likelist = explode(',', $_COOKIE['likelist']);
+    $likeList = explode(',', $_COOKIE['likelist']);
 
-    for ($count = 0; $count < count($likelist); $count++) {
-        if ($likelist[$count] == $boardnum) {
-            $likecondition = true;
+    for ($count = 0; $count < count($likeList); $count++) {
+        if ($likeList[$count] == $boardNum) {
+            $likeCondition = true;
             break;
         } else {
-            $likecondition = false;
+            $likeCondition = false;
         }
     }
 
-    if ($likecondition) {
-        $likeconditionstring = "true";
+    if ($likeCondition) {
+        $likeConditionString = "true";
     } else {
-        $likeconditionstring = "false";
+        $likeConditionString = "false";
     }
 
 
 }
 else{
-    $likelist = explode(',', 0);
-    $likecondition = false;
+    $likeList = explode(',', 0);
+    $likeCondition = false;
 
 }
 
@@ -43,15 +43,15 @@ mysqli_query($conn, 'SET NAMES utf8');
 
 
 
-if($likecondition){
+if($likeCondition){
     //like를 취소하면 상태를 false로 바꾸어주고
     //likelist 에서 현재 게시물을 빼버리고 다시 쿠기로 설정한다.
-    $likecondition =false;
-    $likelist = array_diff($likelist, array($boardnum));
-    $likelist = array_values($likelist);
-    setcookie('likelist', implode(',',$likelist) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
+    $likeCondition =false;
+    $likeList = array_diff($likeList, array($boardNum));
+    $likeList = array_values($likeList);
+    setcookie('likelist', implode(',',$likeList) , time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
 
-    $sqlLike = "UPDATE board set `like`=`like`-1 WHERE index=$boardnum";
+    $sqlLike = "UPDATE board set `like`=`like`-1 WHERE id = '$boardNum'";
     $resLike = $conn->query($sqlLike);
 /*    $row2 = mysqli_fetch_array($res2);
     if ($res2->num_rows != 1) {
@@ -66,11 +66,11 @@ if($likecondition){
 }
 else {
     //like를 눌렀다면
-    $likecondition = true;
-    array_push($likelist, $boardnum);
-    setcookie('likelist', implode(',', $likelist), time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
+    $likeCondition = true;
+    array_push($likeList, $boardNum);
+    setcookie('likelist', implode(',', $likeList), time() + (3536000), "/"); // 1년 동안 쿠키를 유지하도록 해준다.
 
-    $sqlLike = "UPDATE board set `like`=`like`+1 WHERE index=$boardnum";
+    $sqlLike = "UPDATE board set `like`=`like`+1 WHERE id = '$boardNum'";
     $resLike = $conn->query($sqlLike);
 /*    $row2 = mysqli_fetch_array($res2);
     if ($res2->num_rows != 1) {
