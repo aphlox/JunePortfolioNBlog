@@ -6,7 +6,8 @@ $condition = $data ->likecondition;
 $boardnum = $data ->index;
 
 /*DB 불러오기*/
-$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
 mysqli_query($conn, 'SET NAMES utf8');
 $sql = "SELECT *from board where index = '$boardnum'";
 $res = $conn->query($sql);

@@ -1,29 +1,18 @@
 <?php
 session_start();
 
-if (isset($_SESSION['ip'])) {
 
-    echo "isset" . "<br/>";
-    echo session_id() . "</br>";
-
-
-} else {
-    $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-    echo "noset" . "<br/>";
-    echo session_id() . "</br>";
-    AccessLog();
-
-}
 
 
 // 접속 기록
 function AccessLog()
 {
-    echo "hello";
+//    echo "hello";
 
     // 테이블 구조 : uid, ipaddr, date, time, OS, browser, userID, hit
     // SESSION 이 살아있는 동안에는 카운트 안되도록 처리
-    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+    require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
     mysqli_query ($conn, 'SET NAMES utf8');
 
     $accessIp = $_SERVER['REMOTE_ADDR'];
@@ -37,20 +26,20 @@ function AccessLog()
     if ($queryGetCountry && $queryGetCountry['status'] == 'success') {
         $country = $queryGetCountry['country'];
     }
-
+/*
     echo $accessIp."<br/>";
     echo $date."<br/>";
     echo $time."<br/>";
     echo $getOS."<br/>";
     echo $getBrowser."<br/>";
-    echo $country."<br/>";
+    echo $country."<br/>";*/
     $sql = "select *from vistor where ip ='$accessIp' and date ='$date'";
     $result = $conn->query($sql);
-    echo $result->num_rows;
+/*    echo $result->num_rows;*/
 
 
     if ($result->num_rows == 0) { // 오늘 접속날짜 기록이 없으면
-        echo "check";
+//        echo "check";
             $sql = "INSERT INTO vistor (ip,date,time,OS,browser,country ,hit) 
             VALUES ('$accessIp','$date','$time','$getOS','$getBrowser','$country','1')";
             $conn->query($sql);

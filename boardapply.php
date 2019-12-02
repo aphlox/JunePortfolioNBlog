@@ -1,7 +1,8 @@
 ﻿<?php
 header("Content-Type: application/json; charset=UTF-8");
 $obj = json_decode($_POST["x"], false);
-$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
 mysqli_query ($conn, 'SET NAMES utf8');
 /*boardwrite에서 받은 obj 풀기*/
 $boardtitle = addslashes($obj->title);

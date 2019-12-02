@@ -72,7 +72,8 @@ require('lib/nav.php');
 <script>
 
     <?php
-    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+    require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
     mysqli_query($conn, 'SET NAMES utf8');
 
     $sql = "select *from vistor";
@@ -127,7 +128,8 @@ require('lib/nav.php');
         hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]*/
 
     <?php
-    $conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+    require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
     mysqli_query($conn, 'SET NAMES utf8');
 
     $sql = "select *from vistor";

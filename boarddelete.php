@@ -4,7 +4,8 @@
 <body>
 <?php
 header("Content-Type: text/html; charset=UTF-8");
-$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
+require_once("../conf/dbInfo.php");
+$conn = new mysqli($host, $userName, $passwd , $dbName);
 mysqli_query($conn,'SET NAMES utf8');
 if(isset($_GET['boardnum'])){
     $boardnum = $_GET['boardnum']; 
