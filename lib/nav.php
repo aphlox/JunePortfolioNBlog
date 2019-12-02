@@ -3,24 +3,24 @@ require('accessClass.php');
 
 function nav()
 {
-    session_start();
+session_start();
 
-    if (isset($_SESSION['ip'])) {
+if (isset($_SESSION['ip'])) {
 
-        /*    echo "isset" . "<br/>";
-            echo session_id() . "</br>";*/
-
-
-    } else {
-        $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
-        /*    echo "noset" . "<br/>";
-            echo session_id() . "</br>";*/
-        AccessLog();
-
-    }
+    /*    echo "isset" . "<br/>";
+        echo session_id() . "</br>";*/
 
 
-    echo ' <nav class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
+} else {
+    $_SESSION['ip'] = $_SERVER['REMOTE_ADDR'];
+    /*    echo "noset" . "<br/>";
+        echo session_id() . "</br>";*/
+    AccessLog();
+
+}
+
+
+echo ' <nav class="col-md-2 float-left col-1 pl-0 pr-0 collapse width show" id="sidebar">
             <div class="list-group border-0 card text-center text-md-left">
                 <!--블로그 이름-->
                 <h3 class="padding-64 text-center my-5 py-5 text-white">
@@ -28,20 +28,20 @@ function nav()
                         <span style="color: #FFFFFF"><b>June\'s<br>Blog</b></span>
                     </a>
                 </h3>';
-    if ((isset($_SESSION['id'])) && (isset($_SESSION['nickname']))) {
-        echo '   <h4 class="text-center text-white">
+if ((isset($_SESSION['id'])) && (isset($_SESSION['nickname']))) {
+    echo '   <h4 class="text-center text-white">
                         <span onclick="logout()" style="color: #FFFFFF ">Admin Mode</span>
                     
                 </h4>\';';
-    } else {
-        echo '       <h4 class="text-center text-white">
+} else {
+    echo '       <h4 class="text-center text-white">
                     <a href="login.html">
                         <span style="color: #00ff0000 ">Admin login</span>
                     </a>
                 </h4>';
-    }
+}
 
-    echo '
+echo '
 
          
                 <a href="./portfolio.html" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
@@ -76,13 +76,21 @@ function nav()
                 <div class="collapse" id="search">
                 <form name="search">
                     <div class="input-group p-2" style="background-color: #1c1c1c;">
-             
                         <input name="searchtext" type="text" class="form-control" placeholder="내용을 입력하세요.">
-
                     </div>
                 </form>
+                </div>';
 
-                </div>
+if ((isset($_SESSION['id'])) && (isset($_SESSION['nickname']))) {
+echo '                <a href="adminPageDayOfWeek.php" class="list-group-item d-inline-block collapsed" data-parent="#sidebar">
+                    <img style="width: 25px;" src="img/analytics.png"><span class="d-none d-md-inline ml-1">방문자 통계</span>
+                </a>';
+}
+
+
+    echo '
+                
+                
                 
 
           
