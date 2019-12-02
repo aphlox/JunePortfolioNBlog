@@ -66,14 +66,49 @@ require('lib/nav.php');
 
 
 <script>
-
     $('#summernote').summernote({
+
         height: 400,
         maxHeight: null,
         minHeight: 200,
         focus: true,
-        lang: 'ko-KR'
+        lang: 'ko-KR',
+/*        callbacks: {
+            onImageUpload : function(files, editor, welEditable) {
+                console.log('image uplodad:', files);
+                sendFile(files[0], editor, welEditable);
+            },
+        }*/
     });
+
+/*    function sendFile(file,editor,welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            url: "saveimage.php", // image 저장 소스
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            success: function(data){
+//       alert(data);
+                var image = $('<img>').attr('src', '' + data); // 에디터에 img 태그로 저장을 하기 위함
+                $('.summernote').summernote("insertNode", image[0]); // summernote 에디터에 img 태그를 보여줌
+//       editor.insertImage(welEditable, data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus+" "+errorThrown);
+            }
+        });
+    }
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+//     alert($('.summernote').summernote('code'));
+//     alert($('.summernote').val());
+    });*/
+
+
 
 
     /*    window.onload = function autoSave() {

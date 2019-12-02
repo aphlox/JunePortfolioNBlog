@@ -3,8 +3,9 @@ require_once("../conf/dbInfo.php");
 $conn = dbConn();
 mysqli_query($conn, 'SET NAMES utf8');
 
-$boardContent = $_POST['contents'];
 $boardTitle = $conn->real_escape_string($_POST['title']);
+$boardContent = $_POST['contents'];
+
 $file = $_POST['files'];
 
 $boardDate = date("Y-m-d H:i:s");
@@ -12,7 +13,7 @@ $boardDate = date("Y-m-d H:i:s");
 
 
 
-$sql = "insert into board(title, content, date) VALUES ('$boardContent','$boardTitle', '$boardDate')";
+$sql = "insert into board(title, content, date) VALUES ('$boardTitle','$boardContent', '$boardDate')";
 $result = $conn->query($sql);
 if($result===false){
     echo "<script>
