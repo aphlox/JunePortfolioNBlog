@@ -12,6 +12,9 @@ require('lib/nav.php');
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <!--사이드바 CSS 추가하기-->
     <link rel="stylesheet" href="css/sidebar.css">
+    <!--달력 CSS 추가하기-->
+    <link href="css/style.css" rel="stylesheet">
+
     <!--CK Editor 적용-->
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 </head>
@@ -64,18 +67,31 @@ require('lib/nav.php');
                     </div>
                 </div>
             </div>
-            <div class="list-group-item">
+            <div style="display : table; margin-top : 15px; margin-left: auto; margin-right: auto">
+                <ul class="pagination">
+                    <li class="page-item ">
+                        <a class="page-link mobile" id="currentDayText"></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="kCalendar" style=" float: left;"></div>
+            <script>
+                window.onload = function () {
+                    kCalendar('kCalendar');
+                };
+            </script>
+            <div class="list-group-item" id="lineChartParent" style=" float: left; width: 75% ">
                 <canvas id="lineChart"></canvas>
             </div>
 
 
-
-            </div>
-            <footer class="text-center" style="max-width: 920px;">
-                <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
-            </footer>
-        </main>
     </div>
+    <footer class="text-center" style="max-width: 920px;">
+        <!--            <p>Copyright ⓒ 2019 <b>이현준</b> All Rights Reserved.</p>-->
+    </footer>
+    </main>
+</div>
 </div>
 
 <!-- 제이쿼리 자바스크립트 추가하기 -->
@@ -86,53 +102,76 @@ require('lib/nav.php');
 <script src="js/bootstrap.min.js"></script>
 <!-- MDB 라이브러리 추가하기 -->
 <script src="./js/mdb.min.js"></script>
-
-
-<?php
-
-$conn = new mysqli("127.0.0.1", "root", "Midarlk3134!", "juneblog");
-mysqli_query($conn, 'SET NAMES utf8');
-
-$sql = "SELECT DATE(date) AS `eachDay`,
-                                        sum(`hit`)
-                                        FROM vistor
-                                        GROUP BY `eachDay`;";
-$res = $conn->query($sql);
-
-?>
-
-
-
-
-
-
-
-
+<!--캘린더 자바스크립트 추가하기-->
+<script src="js/calendar.js"></script>
 
 
 <script>
-    var ctxL = document.getElementById("lineChart").getContext('2d');
-    var myLineChart = new Chart(ctxL, {
-        type: 'line',
-        data: {
-            labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월","8월"],
-            datasets: [
-                {
-                    label: "유입 방문자",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
-                    pointStrokeColor: "#fff",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [530, 5548, 9673, 10230, 19432, 36559, 58575]
-                }
-            ]
+
+    var date = new Date();
+    var currentYear = date.getFullYear();
+    //년도를 구함
+
+    var currentMonth = date.getMonth() + 1;
+    //연을 구함. 월은 0부터 시작하므로 +1, 12월은 11을 출력
+
+    var currentDate = date.getDate();
+    //오늘 일자.
+    var currentMonthString = ("0" + currentMonth).slice(-2);
+    var currentDateString = ("0" + currentDate).slice(-2);
+    var day = currentYear + currentMonthString + currentDateString;
+
+
+    var currentDayText = document.getElementById("currentDayText");
+
+
+    var hourHitList = [];
+
+    var lineChartParent = document.getElementById("lineChartParent");
+
+    fetch('adminHourHitCheck.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        options: {
-            responsive: true
-        }
+        body: JSON.stringify({
+            "day": day
+        })
+    }).then(function (response) {
+        response.text().then(function (text) {
+            currentDayText.innerText = day;
+
+
+            hourHitList = text.split(",");
+            lineChartParent.innerHTML = "<canvas id=\"lineChart\" style=\"max-width: 800px\"></canvas>";
+            var ctxL = document.getElementById("lineChart").getContext('2d');
+
+            var myLineChart = new Chart(ctxL, {
+                type: 'line',
+                data: {
+                    labels: ["0시", "1시", "2시", "3시", "4시", "5시", "6시", "7시", "8시", "9시", "10시", "11시", "12시",
+                        "13시", "14시", "15시", "16시", "17시", "18시", "19시", "20시", "21시", "22시", "23시"],
+                    datasets: [
+                        {
+                            label: "유입 방문자",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: hourHitList
+
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        })
     });
+
 </script>
 </body>
 </html>

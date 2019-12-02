@@ -316,13 +316,6 @@ require('lib/nav.php');
         });
     }
 
-
-
-
-
-
-
-
 </script>
 </body>
 </html>
