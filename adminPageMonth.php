@@ -101,8 +101,8 @@ require('lib/nav.php');
 
 
 
-    var ctxL = document.getElementById("lineChart").getContext('2d');
-    var myLineChart = new Chart(ctxL, {
+    var getChart = document.getElementById("lineChart").getContext('2d');
+    var myLineChart = new Chart(getChart, {
         type: 'bar',
         data: {
             labels: [

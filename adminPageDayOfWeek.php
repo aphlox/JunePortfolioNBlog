@@ -119,7 +119,6 @@ $conn = dbConn();
 
     var nextWeekBtn = document.getElementById('nextWeekBtn');
 
-
     var lastWeekIndex = <?php echo $res->num_rows - 1;?>;
     var currentWeekIndex = lastWeekIndex;
 
@@ -232,7 +231,7 @@ $conn = dbConn();
     }
 
     function changeChart(currentWeekIndex) {
-        fetch('adminWeekCheck.php', {
+        fetch('adminWeekHitCheck.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

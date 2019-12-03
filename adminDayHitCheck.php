@@ -5,14 +5,12 @@ $data = json_decode($requestBody);
 $weekList = $data ->weekList;
 
 
-
-
 $weekHitArray = array();
 
 
 foreach ($weekList as $day){
     require_once("../conf/dbInfo.php");
-$conn = dbConn();
+    $conn = dbConn();
 
     mysqli_query($conn, 'SET NAMES utf8');
 

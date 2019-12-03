@@ -122,9 +122,9 @@ function changeDayChart(day) {
 
 			hourHitList  =text.split(",");
 			lineChartParent.innerHTML = "<canvas id=\"lineChart\"></canvas>";
-			var ctxL = document.getElementById("lineChart").getContext('2d');
+			var getChart = document.getElementById("lineChart").getContext('2d');
 
-			var myLineChart = new Chart(ctxL, {
+			var myLineChart = new Chart(getChart, {
 				type: 'line',
 				data: {
 					labels: ["0시", "1시", "2시", "3시", "4시", "5시", "6시","7시","8시","9시","10시","11시","12시",

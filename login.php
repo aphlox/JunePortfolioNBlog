@@ -7,8 +7,8 @@ mysqli_query($conn,'SET NAMES utf8');
 $id = $_POST['id'];
 $pws = $_POST['password'];
 
-//나중에 패스워드 암호화? mb5
 
+/*비번 암호화*/
 $sql = "SELECT *from adminlogin where id = '$id' and password = AES_ENCRYPT('$pws',SHA2('key',512))";
 $res = $conn->query($sql);
 if (false === $res) {

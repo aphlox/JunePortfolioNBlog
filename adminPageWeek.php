@@ -104,14 +104,14 @@ $conn = dbConn();
 
 
 
-    var ctxL = document.getElementById("lineChart").getContext('2d');
-    var myLineChart = new Chart(ctxL, {
-        type: 'bar',
+    var getChart = document.getElementById("lineChart").getContext('2d');
+    var myLineChart = new Chart(getChart, {
+        type: "horizontalBar",
         data: {
             labels: [
                 <?php
                 while ($row = mysqli_fetch_array($res)) {
-                    echo "'$row[0]',";
+                    echo "'$row[0]~$row[1]',";
                 }?>
 
             ],

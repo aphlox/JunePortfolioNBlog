@@ -5,7 +5,7 @@ $data = json_decode($requestBody);
 $condition = $data ->likecondition;
 $boardNum = $data ->index;
 
-/*DB 불러오기*/
+/*DB 좋아요 수가 가져와서 좋아요 유무 체크*/
 require_once("../conf/dbInfo.php");
 $conn = dbConn();
 mysqli_query($conn, 'SET NAMES utf8');
