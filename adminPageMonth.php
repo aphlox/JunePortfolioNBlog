@@ -126,7 +126,7 @@ require('lib/nav.php');
 
                     data: [
                         <?php
-                        $sql = " SELECT YEAR(`date`) AS `month`, sum(`hit`)
+                        $sql = " SELECT MONTH(`date`) AS `month`, sum(`hit`)
                         FROM vistor
                          GROUP BY `month`;";
                         $res = $conn->query($sql);

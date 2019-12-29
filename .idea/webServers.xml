@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="94ba311d-8509-470a-b950-8bf49ae84f21" name="aws" url="http://54.180.115.159">
-        <fileTransfer host="54.180.115.159" port="22" privateKey="C:\Users\LG\Desktop\TeamNova\php\june.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
+      <webServer id="94ba311d-8509-470a-b950-8bf49ae84f21" name="aws" url="http://52.79.248.57">
+        <fileTransfer host="52.79.248.57" port="22" privateKey="C:\Users\LG\Desktop\TeamNova\php\june.pem" rootFolder="/var/www" accessType="SFTP" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
